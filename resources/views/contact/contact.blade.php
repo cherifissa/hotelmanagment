@@ -41,9 +41,9 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
-                                <input class="contactus" placeholder="Name" type="text" name="name"
-                                    value="{{ old('name') }}">
-                                @error('name')
+                                <input class="contactus" placeholder="nom" type="text" name="nom"
+                                    value="{{ old('nom') }}">
+                                @error('nom')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
