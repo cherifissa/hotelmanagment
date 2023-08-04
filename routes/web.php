@@ -10,6 +10,7 @@ use App\Http\Controllers\ChambreController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\DemandeReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,8 +29,13 @@ Route::post('/disconnect', [LoginController::class, 'disconnect'])->name('discon
 
 //route client
 Route::prefix('/')->group(function () {
+    Route::get('/', function () {
+        return view('accueil.index');
+    })->name('accueil');
     Route::resource('/message', MessageController::class)->only('store');
     Route::resource('commentaires', Commentaire::class)->only('index', 'destroy', 'create', 'store');
+    Route::resource('demande_reservations', DemandeReservationController::class)->only('create', 'store');
+
     Route::get('/contact', function () {
         return view('contact.contact');
     });
@@ -52,6 +58,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/', function () {
         return view('manager.index');
     });
+    Route::resource('demandes', DemandeReservationController::class)->except('show');
     Route::resource('chambres', ChambreController::class)->except('show');
     Route::resource('/messages', MessageController::class)->only('index', 'destroy');
     Route::resource('profile', ProfileController::class)->only('update', 'index');

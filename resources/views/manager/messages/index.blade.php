@@ -69,13 +69,13 @@
                 @foreach ($messages as $message)
                     <tr class="table-active">
                         <th scope="row">{{ $message->id }}</th>
-                        <td>{{ $message->name }}</td>
+                        <td>{{ $message->nom }}</td>
                         <td>{{ $message->email }}</td>
                         <td>{{ $message->phone }}</td>
                         <td>{{ $message->message }}</td>
                         <td>
                             <div class="d-flex justify-content-evenly">
-                                <form action="{{ route('message.destroy', $message) }}" id="delete-form" method="POST">
+                                <form action="{{ route('messages.destroy', $message) }}" id="delete-form" method="POST">
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-link" onclick="confirmeSuppression(event)">
@@ -91,6 +91,8 @@
                 @endforeach
             </tbody>
         </table>
+        {{ $messages->links('pagination::bootstrap-5') }}
+
     </div>
 
     <script>

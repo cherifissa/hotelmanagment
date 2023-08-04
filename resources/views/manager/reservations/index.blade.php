@@ -72,7 +72,7 @@
                 <ul class="nav nav-pills ml-auto p-2">
                     <li class="nav-item">
                         <a class="btn btn-block btn-success"
-                            href="/manager/{{ request()->segment(count(request()->segments())) }}/create">Ajouter</a>
+                            href="/admin/{{ request()->segment(count(request()->segments())) }}/create">Ajouter</a>
                     </li>
                 </ul>
             </div><!-- /.card-header -->
@@ -128,6 +128,8 @@
                 @endforeach
             </tbody>
         </table>
+        {{ $reservations->links('pagination::bootstrap-5') }}
+
     </div>
 
     <script>

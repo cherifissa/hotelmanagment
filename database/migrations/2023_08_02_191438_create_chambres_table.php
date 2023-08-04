@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('chambres', function (Blueprint $table) {
-            $table->id();
+            $table->integer('id')->unsigned()->primary();
+            $table->enum('type', ['standard', 'privilege', 'suite junior', 'suite VIP']);
+            $table->integer('prix')->unsigned();
+            $table->enum('status', ['occupé', 'libre', 'hors service']);
+            $table->text('description')->nullable(true);
             $table->timestamps();
         });
     }

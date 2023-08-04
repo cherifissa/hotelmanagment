@@ -76,6 +76,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link {{ request()->is('admin/demandes') ? 'active' : '' }} " href="/admin/demandes">
+                        <div class="d-flex align-items-center">
+                            <i class="nav-icon fa fa-bookmark"></i>
+                            <p class="ml-2 mt-3">Demandes de réservation</p>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link {{ request()->is('admin/messages') ? 'active' : '' }} " href="/admin/messages">
                         <div class="d-flex align-items-center">
                             <i class="nav-icon fa fa-envelope"></i>
@@ -227,6 +235,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <a href="{{ route('users.create') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Crée un utilisateur</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#"
+                                class="nav-link  {{ request()->is('admin/demandes') ? 'active' : '' }} ">
+                                <i class="nav-icon fa fa-bookmark"></i>
+                                <p>
+                                    Demandes de réservation
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview" style="display: none;">
+                                <li class="nav-item">
+                                    <a href="{{ route('messages.index') }}" class="nav-link ">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Liste des Demandes de réservation</p>
                                     </a>
                                 </li>
                             </ul>

@@ -1,7 +1,7 @@
 @extends('layouts.manager/app')
 
 @section('titre')
-    Chambre
+    Demandes
 @endsection
 
 @section('content')
@@ -68,43 +68,45 @@
         @endif
         <div class="card">
             <div class="card-header d-flex p-0">
-                <h3 class="card-title p-3">Liste des chambres</h3>
-                <ul class="nav nav-pills ml-auto p-2">
-                    <li class="nav-item">
-                        <a class="btn btn-block btn-success"
-                            href="/manager/{{ request()->segment(count(request()->segments())) }}/create">Ajouter</a>
-                    </li>
-                </ul>
+                <h3 class="card-title p-3">Liste des clients</h3>
             </div><!-- /.card-header -->
         </div>
         <table class="table table-bordered border-secondary">
             <thead class="table-dark">
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Prix</th>
-                    <th scope="col">Statut</th>
-                    <th scope="col">Description</th>
+                    <th scope="col">Nom client</th>
+                    <th scope="col">Téléphone</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Date d'arrivé</th>
+                    <th scope="col">Date depart</th>
+                    <th scope="col">Type de chambre</th>
+                    <th scope="col">Nombre d'adulte</th>
+                    <th scope="col">Nombre d'enfant</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
-                @foreach ($chambres as $chambre)
+                @foreach ($demandes as $demande)
                     <tr class="table-active">
-                        <th scope="row">{{ $chambre->id }}</th>
-                        <td>{{ $chambre->type }}</td>
-                        <td>{{ $chambre->prix }}</td>
-                        <td>{{ $chambre->status }}</td>
-                        <td>{{ $chambre->description }}</td>
+                        <th scope="row">{{ $demande->id }}</th>
+                        <td>{{ $demande->nom_client }}</td>
+                        <td>{{ $demande->tel_client }}</td>
+                        <td>{{ $demande->email_client }}</td>
+                        <td>{{ $demande->date_arrive }}</td>
+                        <td>{{ $demande->date_depart }}</td>
+                        <td>{{ $demande->type_chambre }}</td>
+                        <td>{{ $demande->nombre_adulte }}</td>
+                        <td>{{ $demande->nombre_enfant }}</td>
                         <td>
                             <div class="d-flex justify-content-evenly">
-                                <a href="{{ route('chambres.edit', $chambre) }}" class="btn">
+                                <a href="{{ route('demandes.edit', $demande) }}" class="btn">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
                                         <path
                                             d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z" />
                                     </svg>
                                 </a>
-                                <form action="{{ route('chambres.destroy', $chambre) }}" id="delete-form" method="POST">
+                                <form action="{{ route('demandes.destroy', $demande) }}" id="delete-form" method="POST">
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-link" onclick="confirmeSuppression(event)">
@@ -120,8 +122,8 @@
                 @endforeach
             </tbody>
         </table>
+        {{ $demandes->links('pagination::bootstrap-5') }}
 
-        {{ $chambres->links('pagination::bootstrap-5') }}
     </div>
 
     <script>

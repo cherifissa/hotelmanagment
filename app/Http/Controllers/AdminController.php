@@ -9,7 +9,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $users = User::where('isadmin', '<>', 'client')->get();
+        $users = User::where('isadmin', '<>', 'client')->paginate(6);
         return view('manager.admins.index', compact('users'));
     }
 }

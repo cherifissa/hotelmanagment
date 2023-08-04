@@ -64,23 +64,26 @@
                                 <label for="client_id">ID du client</label>
                                 <select class="form-control" name="client_id">
                                     <option selected>Sélectioner un client</option>
-                                    @foreach ($clients as $client)
-                                        <option value="{{ $client->id }}">
-                                            {{ $client->id }}-{{ $client->nom . ' ' . $client->prenom }}
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}">
+                                            {{ $user->id }}-{{ $user->nom . ' ' . $user->prenom }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="chambre_id">ID du chambre</label>
-                                <select class="form-control" name="chambre_id">
-                                    <option selected>Sélectioner une chambre</option>
-                                    @foreach ($chambres as $chambre)
-                                        <option value="{{ $chambre->id }}">
-                                            {{ $chambre->id }}-{{ $chambre->type }}
-                                        </option>
-                                    @endforeach
-                                </select>
+
+                                @if ($chambres != [])
+                                    <label for="chambre_id">ID du chambre</label>
+                                    <select class="form-control" name="chambre_id">
+                                        <option selected>Sélectioner une chambre</option>
+                                        @foreach ($chambres as $chambre)
+                                            <option value="{{ $chambre->id }}">
+                                                {{ $chambre->id }}-{{ $chambre->type }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                @endif
                             </div>
                         </div>
                         <div class="card-footer">

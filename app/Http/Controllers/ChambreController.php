@@ -9,7 +9,7 @@ class ChambreController extends Controller
 {
     public function index()
     {
-        $chambres = Chambre::all();
+        $chambres = Chambre::paginate(6);
         return view('manager.chambres.index', compact('chambres'));
     }
 

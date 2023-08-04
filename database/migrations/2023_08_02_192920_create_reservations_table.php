@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
+            $table->string('numero', 15);
+            $table->integer('nbr_jour');
+            $table->enum('status', ['checkin', 'checked', 'pending', 'annule']);
+            $table->date('date_arrive');
+            $table->date('date_depart');
+            $table->bigInteger('client_id')->unsigned();
+            $table->foreign('client_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('chambre_id')->unsigned();
+            $table->foreign('chambre_id')->references('id')->on('chambres')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('note', 100)->nullable();
             $table->timestamps();
         });
     }

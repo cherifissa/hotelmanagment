@@ -12,7 +12,7 @@ class ReservationController extends Controller
 {
     public function index()
     {
-        $reservations = Reservation::all();
+        $reservations = Reservation::paginate(6);
         return view('manager.reservations.index', ['reservations' => $reservations]);
     }
     public function create()
@@ -45,7 +45,7 @@ class ReservationController extends Controller
         $randomNumber = mt_rand(1000000000, 999999999999);
 
         $unique = false;
-        $prefix = 'brv';
+        $prefix = 'RES';
 
         do {
             $numero = $prefix . $randomNumber;
