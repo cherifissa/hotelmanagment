@@ -68,3 +68,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('clients', ClientController::class)->only('index');
     Route::resource('reservations', ReservationController::class)->except('show');
 })->name('adminindex');
+
+Route::prefix('restaurant')->group(function () {
+    
+});
