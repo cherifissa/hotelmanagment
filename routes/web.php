@@ -11,6 +11,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\DemandeReservationController;
+use App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,5 +71,5 @@ Route::prefix('admin')->group(function () {
 })->name('adminindex');
 
 Route::prefix('restaurant')->group(function () {
-    
+    Route::resource('services', ServiceController::class)->except('show');
 });

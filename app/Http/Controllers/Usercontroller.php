@@ -36,7 +36,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('users.edit', compact('user'));
+        return view('manager.users.edit', compact('user'));
     }
 
     public function update(Request $request, User $user)
@@ -50,9 +50,15 @@ class UserController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
+        if ($user->isadmin == "client") {
+            $route = "clients.index";
+        } else {
+            $route = "admins.index";
+        }
+
         $user->update($validatedData);
 
-        return redirect()->route('users.index')->with('success', 'User updated successfully.');
+        return redirect()->route($route)->with('success', 'successfully');
     }
 
     public function destroy(User $user)

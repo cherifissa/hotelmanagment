@@ -16,6 +16,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
     <script src="{{ asset('js/sweetalert.js') }}"></script>
 
@@ -334,7 +335,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- REQUIRED SCRIPTS -->
 
     <!-- jQuery -->
-    <script src="{{ asset('js/jquery-3.0.0.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
     <!-- Bootstrap JS -->
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
