@@ -16,7 +16,7 @@
     </div>
     <!--  contact -->
     <div class="contact">
-        <div class="container">
+        <div class="mx-3">
             @if (session('success'))
                 <script type="text/javascript">
                     const Toast = Swal.mixin({
@@ -37,9 +37,6 @@
                     })
                 </script>
             @endif
-
-        </div>
-        <div class="container">
 
             <table class="table table-bordered border-secondary">
                 <h3 class="text text-bold">Liste de reservations</h3>

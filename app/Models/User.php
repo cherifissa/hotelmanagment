@@ -26,6 +26,11 @@ class User extends Authenticatable
         'isadmin'
     ];
 
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'client_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

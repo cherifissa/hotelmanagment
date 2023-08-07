@@ -22,7 +22,6 @@ class LoginController extends Controller
 
         $user = User::where('email', $validatedate['email'])->first();
 
-
         if ($user && Hash::check($validatedate['password'], $user->password)) {
             session(['user' => $user]);
             return redirect()->intended(route('accueil'));

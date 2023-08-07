@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Commentaire;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Usercontroller;
 use App\Http\Controllers\AdminController;
@@ -9,9 +8,11 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ChambreController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ReservationController;
-use App\Http\Controllers\DemandeReservationController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\CommentaireController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ClientDashboardController;
+use App\Http\Controllers\DemandeReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,7 @@ use App\Http\Controllers\ServiceController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+//route commun
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('loginaction');
 Route::post('/disconnect', [LoginController::class, 'disconnect'])->name('disconnect');
@@ -34,8 +35,9 @@ Route::prefix('/')->group(function () {
         return view('accueil.index');
     })->name('accueil');
     Route::resource('/message', MessageController::class)->only('store');
-    Route::resource('commentaires', Commentaire::class)->only('index', 'destroy', 'create', 'store');
+    Route::resource('commentaires', CommentaireController::class)->only('index', 'destroy', 'create', 'store');
     Route::resource('demande_reservations', DemandeReservationController::class)->only('create', 'store');
+    Route::get('/dasboard', [ClientDashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/contact', function () {
         return view('contact.contact');
@@ -71,5 +73,8 @@ Route::prefix('admin')->group(function () {
 })->name('adminindex');
 
 Route::prefix('restaurant')->group(function () {
+    Route::get('/', function () {
+        return view('manager.restaurants.index');
+    });
     Route::resource('services', ServiceController::class)->except('show');
 });

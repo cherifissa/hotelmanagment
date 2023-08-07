@@ -22,7 +22,6 @@
     <link rel="icon" href="{{ asset('images/fevicon.png" type="image/gif') }}" />
     <link rel="stylesheet" href="{{ asset('css/jquery.mCustomScrollbar.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.min.css') }}" media="screen">
-    <script src="{{ asset('js/sweetalert.js') }}"></script>
 
 </head>
 <!-- body -->
@@ -69,7 +68,7 @@
                                             data-bs-toggle="dropdown" aria-expanded="false">
                                             Nos services
                                         </button>
-                                        <ul class="dropdown-menu">
+                                        <ul class="dropdown-menu text-light ">
                                             <li>
                                                 <a class="dropdown-item" href="/chambre">Nos Chambres</a>
                                             </li>
@@ -88,8 +87,9 @@
                                             data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="fa fa-user"></i>
                                         </button>
-                                        <ul class="dropdown-menu">
-                                            @if (!session()->has('client'))
+                                        <ul class="dropdown-menu text-light">
+
+                                            @if (!session()->has('user'))
                                                 <li>
                                                     <a class="dropdown-item" href="/login">Connecter</a>
                                                 </li>
@@ -154,7 +154,7 @@
                             <li class="{{ request()->is('/') ? 'active' : '' }}"><a href="/">Accueil</a></li>
                             <li class="{{ request()->is('about') ? 'active' : '' }}"><a href="about"> À Propos</a>
                             </li>
-                            <li class="{{ request()->is('chambre') ? 'active' : '' }}"><a href="room">Nos
+                            <li class="{{ request()->is('chambre') ? 'active' : '' }}"><a href="chambre">Nos
                                     Chambres</a>
                             </li>
                             <li class="{{ request()->is('gallery') ? 'active' : '' }}"><a href="gallery">Gallerie</a>
@@ -200,8 +200,10 @@
     <!-- end footer -->
     <!-- Javascript files-->
     <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/jquery-3.0.0.min.js') }}"></script>
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.js') }}"></script>
+
+    <script src="{{ asset('js/sweetalert.js') }}"></script>
     <!-- sidebar -->
     <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
