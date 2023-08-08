@@ -46,15 +46,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </li>
 
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link {{ request()->is('admin/clients*') ? 'active' : '' }} " href="/admin/clients">
+                    <a class="nav-link {{ request()->is('restaurant/clients*') ? 'active' : '' }} "
+                        href="/restaurant/clients">
                         <div class="d-flex align-items-center"> <i class="nav-icon fas fa-users"></i>
                             <p class="ml-2 mt-3">Clients</p>
                         </div>
                     </a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link {{ request()->is('admin/reservations*') ? 'active' : '' }} "
-                        href="/admin/reservations">
+                    <a class="nav-link {{ request()->is('restaurant/reservations*') ? 'active' : '' }} "
+                        href="/restaurant/reservations">
                         <div class="d-flex align-items-center"> <i class="nav-icon fa fa-receipt"></i>
                             <p class="ml-2 mt-3">Reservations</p>
                         </div>
