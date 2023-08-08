@@ -28,13 +28,20 @@
                             <div class="form-group">
                                 <label for="type">Type</label>
                                 <select class="form-control" name="type">
+                                    <option value="">Selectionner un type</option>
                                     <option value="standard" {{ old('type') === 'standard' ? 'selected' : '' }}>standard
                                     </option>
                                     <option value="privilege" {{ old('type') === 'privilege' ? 'selected' : '' }}>privilege
                                     </option>
                                     <option value="suite junior" {{ old('type') === 'suite junior' ? 'selected' : '' }}>
                                         suite junior</option>
+                                    <option value="suite famille" {{ old('type') === 'suite famille' ? 'selected' : '' }}>
+                                        suite famille
+                                    </option>
                                     <option value="suite VIP" {{ old('type') === 'suite VIP' ? 'selected' : '' }}>suite VIP
+                                    </option>
+                                    <option value="suite presidentielle"
+                                        {{ old('type') === 'suite presidentielle' ? 'selected' : '' }}>suite presidentielle
                                     </option>
                                 </select>
                                 @error('type')

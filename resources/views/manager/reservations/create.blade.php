@@ -22,13 +22,11 @@
                             <div class="form-group">
                                 <label for="status">Statut</label>
                                 <select class="form-control" name="status">
-                                    <option value="checkin" {{ old('status') === 'checkin' ? 'selected' : '' }}>Check-in
+                                    <option value="">Selectionner l'état du réservation</option>
+                                    <option value="enregistre" {{ old('status') === 'checkin' ? 'selected' : '' }}>
+                                        Enregistré
                                     </option>
-                                    <option value="checked" {{ old('status') === 'checked' ? 'selected' : '' }}>Checked
-                                    </option>
-                                    <option value="pending" {{ old('status') === 'pending' ? 'selected' : '' }}>Pending
-                                    </option>
-                                    <option value="annule" {{ old('status') === 'annule' ? 'selected' : '' }}>Annulé
+                                    <option value="attente" {{ old('status') === 'checked' ? 'selected' : '' }}>En attente
                                     </option>
                                 </select>
                                 @error('status')
@@ -61,6 +59,14 @@
                                 @enderror
                             </div>
                             <div class="form-group">
+                                <label for="nbr_client">Nombre de client</label>
+                                <input type="number" class="form-control" name="nbr_client"
+                                    value="{{ old('nbr_client') }}">
+                                @error('nbr_client')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
                                 <label for="client_id">ID du client</label>
                                 <select class="form-control" name="client_id">
                                     <option selected>Sélectioner un client</option>
@@ -70,20 +76,23 @@
                                         </option>
                                     @endforeach
                                 </select>
+                                @error('client_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
-
-                                @if ($chambres != [])
-                                    <label for="chambre_id">ID du chambre</label>
-                                    <select class="form-control" name="chambre_id">
-                                        <option selected>Sélectioner une chambre</option>
-                                        @foreach ($chambres as $chambre)
-                                            <option value="{{ $chambre->id }}">
-                                                {{ $chambre->id }}-{{ $chambre->type }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                @endif
+                                <label for="chambre_id">ID du chambre</label>
+                                <select class="form-control" name="chambre_id">
+                                    <option selected>Sélectioner une chambre</option>
+                                    @foreach ($chambres as $chambre)
+                                        <option value="{{ $chambre->id }}">
+                                            {{ $chambre->id }}-{{ $chambre->type }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('chambre_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="card-footer">

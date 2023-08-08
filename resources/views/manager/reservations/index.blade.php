@@ -85,6 +85,7 @@
                 <th scope="col">Statut</th>
                 <th scope="col">Date d'arrivé</th>
                 <th scope="col">Date de depart</th>
+                <th scope="col">Prix</th>
                 <th scope="col">Client</th>
                 <th scope="col">Chambre</th>
                 <th scope="col">Actions</th>
@@ -100,6 +101,7 @@
                     <td>{{ $reservation->status }}</td>
                     <td>{{ $reservation->date_arrive }}</td>
                     <td>{{ $reservation->date_depart }}</td>
+                    <td>{{ $reservation->prix }}</td>
                     <td>{{ $reservation->client_id }}</td>
                     <td>{{ $reservation->chambre_id }}</td>
                     <td>

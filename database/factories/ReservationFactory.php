@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Chambre;
 use App\Models\Reservation;
@@ -21,20 +22,48 @@ class ReservationFactory extends Factory
 
     public function definition()
     {
-        $arrivalDate = $this->faker->dateTimeBetween('now', '+30 days');
+        $arrivalDate = $this->faker->dateTimeBetween('-4 days', '+20 days');
         $departureDate = $this->faker->dateTimeBetween($arrivalDate, $arrivalDate->format('Y-m-d') . ' +10 days');
 
         return [
-            'numero' => $this->faker->unique()->numerify('RES########'), // Generates a unique reservation number
-            'nbr_jour' => $this->faker->numberBetween(1, 10), // Random number of days between 1 and 10
-            'status' => $this->faker->randomElement(['checkin', 'checked', 'pending', 'annule']), // Random status
+            'numero' => $this->faker->unique()->numerify('RES#########'),
+            'nbr_jour' => function ($attributes) {
+                $arrival = Carbon::parse($attributes['date_arrive']);
+                $departure = Carbon::parse($attributes['date_depart']);
+
+                $diffInDays = $arrival->diffInDays($departure);
+
+                return max($diffInDays, 1);
+            },
+            //'nbr_jour' => $this->faker->numberBetween(1, 10),
+            'nbr_client' => $this->faker->numberBetween(1, 3),
+            'status' => function ($attributes) use ($arrivalDate, $departureDate) {
+                $today = Carbon::today();
+                $arrival = Carbon::parse($attributes['date_arrive']);
+                $departure = Carbon::parse($attributes['date_arrive']);
+
+                if ($arrival->isBefore($today) && $departure->isBefore($today)) {
+                    return $this->faker->randomElement(['quitte', 'annule']);
+                } elseif ($arrival->isAfter($today)) {
+                    return $this->faker->randomElement(['enregistre', 'attente']);
+                }
+            },
             'date_arrive' => $arrivalDate,
             'date_depart' => $departureDate,
             'client_id' => function () {
                 return User::inRandomOrder()->first()->id;
             },
             'chambre_id' => function () {
-                return Chambre::inRandomOrder()->first()->id;
+                $randomChambre = Chambre::where('status', 'libre')->inRandomOrder()->first();
+                return $randomChambre;
+            },
+            'prix' => function ($attributes) {
+                $nbr_jour = $attributes['nbr_jour'];
+                $chambreId = $attributes['chambre_id'];
+                $chambre = Chambre::find($chambreId);
+                $chambre->status = 'occupé';
+                $chambre->save();
+                return $chambre->prix * $nbr_jour;
             },
         ];
     }

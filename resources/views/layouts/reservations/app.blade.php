@@ -15,11 +15,12 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+
     <!-- fevicon -->
-    <link rel="icon" href="{{ asset('images/fevicon.png" type="image/gif') }}" />
+    <link rel="icon" href="{{ asset('images/logo.png') }}" />
     <link rel="stylesheet" href="{{ asset('css/jquery.mCustomScrollbar.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.min.css') }}" media="screen">
 

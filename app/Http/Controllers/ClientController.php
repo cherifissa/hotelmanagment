@@ -12,4 +12,10 @@ class ClientController extends Controller
         $users = User::where('isadmin', 'client')->paginate(6);
         return view('manager.clients.index', compact('users'));
     }
+
+    public function indexclt()
+    {
+        $users = User::where('isadmin', 'client')->paginate(6);
+        return view('manager.restaurants.indexclt', compact('users'));
+    }
 }

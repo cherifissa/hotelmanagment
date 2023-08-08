@@ -1,6 +1,6 @@
-@extends('layouts.manager.app')
+@extends('layouts.restaurant.app')
 @section('titre')
-    manager
+    Restaurant
 @endsection
 @section('content')
     <section class="content">

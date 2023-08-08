@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('numero', 15);
             $table->integer('nbr_jour');
-            $table->enum('status', ['checkin', 'checked', 'pending', 'annule']);
+            $table->integer('nbr_client');
+            $table->integer('prix');
+            $table->enum('status', ['enregistre', 'attente', 'quitte', 'annule']);
             $table->date('date_arrive');
             $table->date('date_depart');
             $table->bigInteger('client_id')->unsigned();

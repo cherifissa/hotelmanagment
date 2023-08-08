@@ -21,17 +21,21 @@ class ChambreFactory extends Factory
     public function definition()
 
     {
-        $type = $this->faker->randomElement(['standard', 'privilege', 'suite junior', 'suite VIP']);
+        $type = $this->faker->randomElement(['standard', 'privilege', 'suite junior', 'suite famille', 'suite VIP', 'suite presidentielle']);
         $prix = 0; // Defaut
 
         if ($type === 'standard') {
-            $prix = 46000;
+            $prix = 25000;
         } elseif ($type === 'privilege') {
-            $prix = 66000;
+            $prix = 35000;
         } else if ($type === 'suite junior') {
-            $prix = 81000;
+            $prix = 45000;
+        } else if ($type === 'suite famille') {
+            $prix = 85000;
         } else if ($type === 'suite VIP') {
-            $prix = 100000;
+            $prix = 105000;
+        } else if ($type === 'suite presidentielle') {
+            $prix = 150000;
         }
 
         return [

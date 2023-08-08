@@ -74,8 +74,6 @@
         <thead class="table-dark">
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Nom client</th>
-                <th scope="col">Téléphone</th>
                 <th scope="col">Email</th>
                 <th scope="col">Date d'arrivé</th>
                 <th scope="col">Date depart</th>
@@ -89,8 +87,6 @@
             @foreach ($demandes as $demande)
                 <tr class="table-active">
                     <th scope="row">{{ $demande->id }}</th>
-                    <td>{{ $demande->nom_client }}</td>
-                    <td>{{ $demande->tel_client }}</td>
                     <td>{{ $demande->email_client }}</td>
                     <td>{{ $demande->date_arrive }}</td>
                     <td>{{ $demande->date_depart }}</td>

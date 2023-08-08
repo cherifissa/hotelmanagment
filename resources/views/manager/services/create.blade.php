@@ -1,4 +1,4 @@
-@extends('layouts.manager.app')
+@extends('layouts.restaurant.app')
 
 @section('titre')
     Réservation

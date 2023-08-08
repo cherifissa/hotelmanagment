@@ -20,7 +20,7 @@ class DemandeReservationController extends Controller
             'tel_client' => 'required|numeric',
             'date_arrive' => 'required|date',
             'date_depart' => 'required|date|after:date_arrive',
-            'type_chambre' => 'in:standard,privilege,suite junior,suite VIP',
+            'type_chambre' => 'required|in:standard,privilege,suite junior,suite VIP',
             'nombre_adulte' => 'required|integer|min:1',
             'nombre_enfant' => 'required|integer|min:0',
         ]);

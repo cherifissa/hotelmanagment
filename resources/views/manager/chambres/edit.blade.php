@@ -32,8 +32,16 @@
                                     <option value="suite junior"
                                         {{ old('type', $chambre->type) === 'suite junior' ? 'selected' : '' }}>
                                         suite junior</option>
+                                    <option value="suite famille"
+                                        {{ old('type', $chambre->type) === 'suite famille' ? 'selected' : '' }}>suite
+                                        famille
+                                    </option>
                                     <option value="suite VIP"
                                         {{ old('type', $chambre->type) === 'suite VIP' ? 'selected' : '' }}>suite VIP
+                                    </option>
+                                    <option value="suite presidentielle"
+                                        {{ old('type', $chambre->type) === 'suite presidentielle' ? 'selected' : '' }}>suite
+                                        presidentielle
                                     </option>
                                 </select>
                                 @error('type')

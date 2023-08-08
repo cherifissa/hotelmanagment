@@ -12,7 +12,9 @@ class Reservation extends Model
     public $fillable = [
         'numero',
         'nbr_jour',
+        'nbr_client',
         'status',
+        'prix',
         'date_arrive',
         'date_depart',
         'client_id',

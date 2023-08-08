@@ -15,6 +15,11 @@ class ReservationController extends Controller
         $reservations = Reservation::paginate(6);
         return view('manager.reservations.index', ['reservations' => $reservations]);
     }
+    public function indexrsv()
+    {
+        $reservations = Reservation::paginate(6);
+        return view('manager.restaurants.indexrsv', ['reservations' => $reservations]);
+    }
     public function create()
     {
         $users = User::all();
@@ -25,18 +30,21 @@ class ReservationController extends Controller
     {
         // Validate the input data from the request
         $validatedData = $request->validate([
-            'nbr_jour' => 'required|integer',
-            'status' => 'required|in:checkin,checked,annule,pending',
-            'date_arrive' => 'required|date',
+            'nbr_jour' => 'required|integer|min:1',
+            'nbr_client' => 'required|integer|min:1',
+            'status' => 'required|in:attente,enregistre',
+            'date_arrive' => 'required|date|before:date_depart',
             'date_depart' => 'required|date|after:date_arrive',
-            'client_id' => 'required',
-            'chambre_id' => 'required',
+            'client_id' => 'required|exists:users,id',
+            'chambre_id' => 'required|exists:chambres,id',
         ]);
 
+        $chambre = Chambre::find($validatedData["chambre_id"]);
+        $validatedData["prix"] = $chambre->prix * $validatedData["nbr_jour"];
+        //dd($validatedData["prix"]);
         $validatedData["numero"] = $this->generateUniqueNumero();
 
         $reservation = Reservation::create($validatedData);
-
         return redirect()->route('reservations.index')->with('success', 'Reservation created successfully.');
     }
 
@@ -71,13 +79,12 @@ class ReservationController extends Controller
     public function update(Request $request, Reservation $reservation)
     {
         $validatedData = $request->validate([
-            'nbr_jour' => 'required|integer',
-            'status' => 'required|in:checkin,checked,annule',
-            'date_arrive' => 'required|date',
+            'nbr_jour' => 'required|integer|min:1',
+            'status' => 'required|in:annule,quitte,attente,enregistre',
+            'date_arrive' => 'required|date|before:date_depart',
             'date_depart' => 'required|date|after:date_arrive',
-            'client_id' => 'required',
-            'chambre_id' => 'required',
         ]);
+
 
         $reservation->update($validatedData);
 

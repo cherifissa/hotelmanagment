@@ -76,5 +76,7 @@ Route::prefix('restaurant')->group(function () {
     Route::get('/', function () {
         return view('manager.restaurants.index');
     });
+    Route::get('reservations', [ReservationController::class, 'indexrsv'])->name('rsvindex');
+    Route::get('clients', [ClientController::class, 'indexclt'])->name('cltindex');
     Route::resource('services', ServiceController::class)->except('show');
-});
+})->name('restoindex');

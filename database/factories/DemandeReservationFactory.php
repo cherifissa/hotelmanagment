@@ -21,16 +21,14 @@ class DemandeReservationFactory extends Factory
     public function definition(): array
     {
 
-        $typesChambre = ['standard', 'privilege', 'suite junior', 'suite VIP'];
+        $typesChambre = ['standard', 'privilege', 'suite junior', 'suite famille', 'suite VIP', 'suite presidentielle'];
 
         return [
-            'nom_client' => $this->faker->name,
             'email_client' => $this->faker->unique()->safeEmail,
-            'tel_client' => $this->faker->phoneNumber,
-            'date_arrive' => $this->faker->dateTimeBetween('now', '+1 year')->format('Y-m-d'),
-            'date_depart' => $this->faker->dateTimeBetween('+1 day', '+2 weeks')->format('Y-m-d'),
+            'date_arrive' => $this->faker->dateTimeBetween('now', '+1 weeks')->format('Y-m-d'),
+            'date_depart' => $this->faker->dateTimeBetween('+1 day', '+1 weeks')->format('Y-m-d'),
             'type_chambre' => $this->faker->randomElement($typesChambre),
-            'nombre_adulte' => $this->faker->numberBetween(1, 4),
+            'nombre_adulte' => $this->faker->numberBetween(1, 3),
             'nombre_enfant' => $this->faker->numberBetween(0, 2),
         ];
     }
