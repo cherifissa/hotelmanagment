@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Client;
 use App\Models\Chambre;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
@@ -42,7 +41,7 @@ class ReservationController extends Controller
         $chambre = Chambre::find($validatedData["chambre_id"]);
         $validatedData["prix"] = $chambre->prix * $validatedData["nbr_jour"];
         //dd($validatedData["prix"]);
-        $validatedData["numero"] = $this->generateUniqueNumero();
+        $validatedData["id"] = $this->generateUniqueNumero();
 
         $reservation = Reservation::create($validatedData);
         return redirect()->route('reservations.index')->with('success', 'Reservation created successfully.');
@@ -58,7 +57,7 @@ class ReservationController extends Controller
         do {
             $numero = $prefix . $randomNumber;
 
-            $existingReservation = Reservation::where('numero', $numero)->exists();
+            $existingReservation = Reservation::where('id', $numero)->exists();
 
             if (!$existingReservation) {
                 $unique = true;

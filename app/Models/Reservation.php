@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     use HasFactory;
+    public $primaryKey = 'numero';
 
     public $fillable = [
         'numero',
@@ -20,4 +21,9 @@ class Reservation extends Model
         'client_id',
         'chambre_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'client_id');
+    }
 }

@@ -10,8 +10,14 @@ class Service extends Model
     use HasFactory;
 
     protected $fillable = [
-
+        'type_service',
+        'type_payement',
         'prix',
-        'reservation_id',
+        'reservation_id'
     ];
+
+    public function reservation()
+    {
+        return $this->belongsTo(Reservation::class, 'reservation_id');
+    }
 }

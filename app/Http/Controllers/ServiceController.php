@@ -21,12 +21,12 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'type_service' => 'required|in:ptdej,dej,diner',
             'type_payement' => 'required|in:cash,gratuite,reservation',
             'prix' => 'required|numeric',
-            'reservation_id' => 'required|exists:reservations,numero',
+            'reservation_id' => 'exists:reservations,numero',
         ]);
         $service = Service::create($validatedData);
-
         return redirect()->route('services.index')->with('success', 'successfully');
     }
     public function edit(Service $service)

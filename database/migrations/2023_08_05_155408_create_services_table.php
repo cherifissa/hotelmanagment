@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
+            $table->enum('type_service', ['ptdej', 'dej', 'diner']);
             $table->enum('type_payement', ['cash', 'gratuite', 'reservation'])->nullable();
             $table->integer('prix');
-            $table->bigInteger('reservation_id')->unsigned();
-            $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('reservation_id');
+            $table->foreign('reservation_id')->references('numero')->on('reservations')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
