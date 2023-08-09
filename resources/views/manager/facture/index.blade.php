@@ -5,101 +5,124 @@
 @endsection
 
 @section('content')
-    <div class="container ">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header bg-black"></div>
-                    <div class="card-body">
-
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <i class="far fa-building text-danger fa-6x float-start"></i>
+                    <div class="card-header">
+                        <img src="{{ asset('images/logo.png') }}" alt="">
+                        <span class="float-right"> Facture</span>
+                    </div>
+                    <div class="card- ">
+                        <div class="row mb-4">
+                            <div class="col-sm-6">
+                                <h6 class="mb-3">De:</h6>
+                                <div>
+                                    <strong>Keto Hotel</strong>
                                 </div>
+                                <div>Madalinskiego 8</div>
+                                <div>71-101 Szczecin, Poland</div>
+                                <div>Email: info@webz.com.pl</div>
+                                <div>Phone: +48 444 666 3333</div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-xl-12">
-
-                                    <ul class="list-unstyled float-end">
-                                        <li style="font-size: 30px; color: red;">Company</li>
-                                        <li>123, Elm Street</li>
-                                        <li>123-456-789</li>
-                                        <li>mail@mail.com</li>
-                                    </ul>
+                            <div class="col-sm-6">
+                                <h6 class="mb-3">A:</h6>
+                                <div>
+                                    <strong>Bob Mart</strong>
                                 </div>
+                                <div>Attn: Daniel Marek</div>
+                                <div>43-190 Mikolow, Poland</div>
+                                <div>Email: marek@daniel.com</div>
+                                <div>Phone: +48 123 456 789</div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive-sm">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="center">#</th>
+                                        <th>Éléments</th>
+                                        <th>Description</th>
+                                        <th class="right">Coût</th>
+                                        <th class="right">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="center">1</td>
+                                        <td class="left strong">Origin License</td>
+                                        <td class="left">Extended License</td>
+                                        <td class="right">$999,00</td>
+                                        <td class="right">$999,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="center">2</td>
+                                        <td class="left">Custom Services</td>
+                                        <td class="left">Instalation and Customization (cost per hour)</td>
+                                        <td class="right">$150,00</td>
+                                        <td class="right">$3.000,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="center">3</td>
+                                        <td class="left">Hosting</td>
+                                        <td class="left">1 year subcription</td>
+                                        <td class="right">$499,00</td>
+                                        <td class="right">$499,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="center">4</td>
+                                        <td class="left">Platinum Support</td>
+                                        <td class="left">1 year subcription 24/7</td>
+                                        <td class="right">$3.999,00</td>
+                                        <td class="right">$3.999,00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-5">
+
                             </div>
 
-                            <div class="row text-center">
-                                <h3 class="text-uppercase text-center mt-3" style="font-size: 40px;">Invoice</h3>
-                                <p>123456789</p>
-                            </div>
-
-                            <div class="row mx-3">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Description</th>
-                                            <th scope="col">Amount</th>
-                                        </tr>
-                                    </thead>
+                            <div class="col-lg-4 col-sm-5 ml-auto">
+                                <table class="table table-clear">
                                     <tbody>
                                         <tr>
-                                            <td>Samsung TV</td>
-                                            <td><i class="fas fa-dollar-sign"></i> 500,00</td>
+                                            <td class="left">
+                                                <strong>Sous-total</strong>
+                                            </td>
+                                            <td class="right">$8.497,00</td>
                                         </tr>
                                         <tr>
-                                            <td>JBL Speaker</td>
-                                            <td><i class="fas fa-dollar-sign"></i> 300,00</td>
+                                            <td class="left">
+                                                <strong>Remise (20 %)</strong>
+                                            </td>
+                                            <td class="right">1 699,40 $</td>
                                         </tr>
                                         <tr>
-                                            <td>Macbook Air</td>
-                                            <td><i class="fas fa-dollar-sign"></i> 1000,00</td>
+                                            <td class="left">
+                                                <strong>TVA (10%)</strong>
+                                            </td>
+                                            <td class="right">679,76 $</td>
                                         </tr>
                                         <tr>
-                                            <td>Iphone 11 PRO</td>
-                                            <td><i class="fas fa-dollar-sign"></i> 5000,00</td>
+                                            <td class="left">
+                                                <strong>Totale</strong>
+                                            </td>
+                                            <td class="right">
+                                                <strong>7 477,36 $</strong>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
 
                             </div>
-                            <div class="row">
-                                <div class="col-xl-8">
-                                    <ul class="list-unstyled float-end me-0">
-                                        <li><span class="me-3 float-start">Total Amount:</span><i
-                                                class="fas fa-dollar-sign"></i>
-                                            6850,00
-                                        </li>
-                                        <li> <span class="me-5">Discount:</span><i class="fas fa-dollar-sign"></i> 500,00
-                                        </li>
-                                        <li><span class="float-start" style="margin-right: 35px;">Shippment: </span><i
-                                                class="fas fa-dollar-sign"></i> 500,00</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-xl-8" style="margin-left:60px">
-                                    <p class="float-end"
-                                        style="font-size: 30px; color: red; font-weight: 400;font-family: Arial, Helvetica, sans-serif;">
-                                        Total:
-                                        <span><i class="fas fa-dollar-sign"></i> 6350,00</span>
-                                    </p>
-                                </div>
-
-                            </div>
-
-                            <div class="row mt-2 mb-5">
-                                <p class="fw-bold">Date: <span class="text-muted">23 June 20221</span></p>
-                                <p class="fw-bold mt-3">Signature:</p>
-                            </div>
 
                         </div>
 
                     </div>
-                    <div class="card-footer bg-black"></div>
                 </div>
             </div>
         </div>
