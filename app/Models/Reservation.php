@@ -9,6 +9,7 @@ class Reservation extends Model
 {
     use HasFactory;
     public $primaryKey = 'numero';
+    protected $keyType = 'string';
 
     public $fillable = [
         'numero',

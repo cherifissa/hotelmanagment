@@ -13,6 +13,7 @@ use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ClientDashboardController;
 use App\Http\Controllers\DemandeReservationController;
+use App\Http\Controllers\FactureController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/', function () {
         return view('manager.index');
     });
+    Route::get('facture', [FactureController::class, 'index'])->name('facture');
     Route::resource('demandes', DemandeReservationController::class)->except('show');
     Route::resource('chambres', ChambreController::class)->except('show');
     Route::resource('/messages', MessageController::class)->only('index', 'destroy');

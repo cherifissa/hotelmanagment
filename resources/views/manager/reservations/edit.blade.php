@@ -14,7 +14,7 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form action="{{ route('reservations.update', $reservation->id) }}" method="POST">
+                    <form action="{{ route('reservations.update', $reservation) }}" method="POST">
                         @csrf
                         @method('PUT')
 
