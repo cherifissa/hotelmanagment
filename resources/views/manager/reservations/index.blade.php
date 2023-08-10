@@ -122,7 +122,6 @@
                             </form>
                             <form action="{{ route('facture') }}" method="GET">
                                 @csrf
-
                                 <button class="btn btn-link bg-dark btn-secondary" data-bs-toggle="tooltip"
                                     data-bs-placement="bottom" title="Consulter la facture">
                                     <i class="fa fa-print"></i>
