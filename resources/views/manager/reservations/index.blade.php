@@ -120,7 +120,7 @@
                                     </svg>
                                 </button>
                             </form>
-                            <form action="{{ route('facture') }}" method="GET">
+                            <form action="{{ route('facture', $reservation) }}" method="GET">
                                 @csrf
                                 <button class="btn btn-link bg-dark btn-secondary" data-bs-toggle="tooltip"
                                     data-bs-placement="bottom" title="Consulter la facture">

@@ -45,14 +45,18 @@ class ReservationFactory extends Factory
                 if ($arrival->isBefore($today) && $departure->isBefore($today)) {
                     return $this->faker->randomElement(['quitte', 'annule']);
                 } elseif ($arrival->isAfter($today)) {
-                    return $this->faker->randomElement(['enregistre', 'attente']);
+                    return 'attente';
+                } elseif ($arrival->isSameAs($today)) {
+                    return 'enregistre';
                 }
             },
             'date_arrive' => $arrivalDate,
             'date_depart' => $departureDate,
             'client_id' => function () {
-                return User::inRandomOrder()->first()->id;
+                $clientUser = User::where('isadmin', 'client')->inRandomOrder()->first();
+                return $clientUser->id;
             },
+
             'chambre_id' => function () {
                 $randomChambre = Chambre::where('status', 'libre')->inRandomOrder()->first();
                 return $randomChambre;
