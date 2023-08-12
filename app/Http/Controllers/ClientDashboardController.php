@@ -8,7 +8,7 @@ class ClientDashboardController extends Controller
 {
     public function index()
     {
-        $user = session('user');
+        $user = session('client');
         $reservations = $user->reservations;
         return view('dashboard.dashboard', compact('reservations', 'user'));
     }
