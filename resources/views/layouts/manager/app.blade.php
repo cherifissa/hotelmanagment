@@ -12,13 +12,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="shortcut icon" href="{{ asset('dist/img/AdminLTELogo.png') }}" type="image/x-icon">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="{{ asset('fonts/fontfamilly.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/uplot/uPlot.min.css') }}">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
-    <script src="{{ asset('js/sweetalert.js') }}"></script>
 
 </head>
 
@@ -87,6 +86,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="d-flex align-items-center">
                             <i class="nav-icon fa fa-envelope"></i>
                             <p class="ml-2 mt-3">Messages</p>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link {{ request()->is('admin/statistiques') ? 'active' : '' }} "
+                        href="/admin/statistiques">
+                        <div class="d-flex align-items-center">
+                            <i class="nav-icon fas fa-chart-bar"></i>
+                            <p class="ml-2 mt-3">Statistiques</p>
                         </div>
                     </a>
                 </li>
@@ -278,6 +286,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <ul class="nav nav-bottom nav-sidebar flex-column" data-widget="treeview" role="menu">
 
                         <li class="nav-item mt-auto">
+                            <a href="{{ url('admin/statistiques') }}"
+                                class="nav-link  {{ request()->is('admin/statistiques*') ? 'active' : '' }} ">
+                                <i class="nav-icon fas fa-chart-bar"></i>
+                                <p>Statistiques</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-bottom nav-sidebar flex-column" data-widget="treeview" role="menu">
+
+                        <li class="nav-item mt-auto">
                             <a href="{{ route('profile.index') }}"
                                 class="nav-link  {{ request()->is('admin/profile*') ? 'active' : '' }} ">
                                 <i class="nav-icon fas fa-user"></i>
@@ -340,9 +358,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
-
+    <script src="{{ asset('js/sweetalert.js') }}"></script>
+    <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
+    <script src="{{ asset('js/highchart.js') }}"></script>
+    <script src="{{ asset('js/accessibility.js') }}"></script>
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
     <script src="{{ asset('js/jspdf.min.js') }}"></script>
+    >
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>

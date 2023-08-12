@@ -23,8 +23,8 @@ class LoginController extends Controller
         $user = User::where('email', $validatedate['email'])->first();
 
         if ($user && Hash::check($validatedate['password'], $user->password)) {
-            session(['user' => $user]);
-            return redirect()->intended(route('accueil'));
+            session(['client' => $user]);
+            return redirect()->intended();
         } else {
             // Invalid email or password, handle the authentication failure
             return back()->withErrors(['erreur' => 'Email ou mot de passe invalide'])
@@ -34,6 +34,7 @@ class LoginController extends Controller
     public function disconnect()
     {
         session(['user' => null]);
+        session(['client' => null]);
         return redirect()->route('accueil');
     }
 }

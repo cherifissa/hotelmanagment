@@ -14,6 +14,9 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ClientDashboardController;
 use App\Http\Controllers\DemandeReservationController;
 use App\Http\Controllers\FactureController;
+use App\Http\Controllers\StatistiqueController;
+use App\Http\Middleware\AdminAccessMiddleware;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -58,10 +61,12 @@ Route::prefix('/')->group(function () {
 });
 
 //route admin
+//middleware([AdminAccessMiddleware::class])->
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {
         return view('manager.index');
     });
+    Route::get('statistiques', [StatistiqueController::class, 'index'])->name('statistiques');
     Route::get('facture/{reservation}', [FactureController::class, 'index'])->name('facture');
     Route::resource('demandes', DemandeReservationController::class)->except('show');
     Route::resource('chambres', ChambreController::class)->except('show');
@@ -73,6 +78,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('clients', ClientController::class)->only('index');
     Route::resource('reservations', ReservationController::class)->except('show');
 })->name('adminindex');
+
 
 Route::prefix('restaurant')->group(function () {
     Route::get('/', function () {

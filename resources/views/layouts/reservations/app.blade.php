@@ -90,12 +90,7 @@
                                         </button>
                                         <ul class="dropdown-menu text-light">
 
-                                            @if (!session()->has('user'))
-                                                <li>
-                                                    <a class="dropdown-item" href="/login">Connecter</a>
-                                                </li>
-                                                <li><a class="dropdown-item" href="/signin">Créer un compte</a></li>
-                                            @else
+                                            @if (session()->has('client'))
                                                 <li>
                                                     <a class="dropdown-item" href="/profile">profile</a>
                                                 </li>
@@ -114,6 +109,11 @@
                                                             Deconnecter</button>
                                                     </form>
                                                 </li>
+                                            @else
+                                                <li>
+                                                    <a class="dropdown-item" href="/login">Connecter</a>
+                                                </li>
+                                                <li><a class="dropdown-item" href="/signin">Créer un compte</a></li>
                                             @endif
 
                                         </ul>
