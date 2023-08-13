@@ -22,7 +22,7 @@ class ReservationFactory extends Factory
 
     public function definition()
     {
-        $arrivalDate = $this->faker->dateTimeBetween('-4 days', '+20 days');
+        $arrivalDate = $this->faker->dateTimeBetween('-4 days', '+10 days');
         $departureDate = $this->faker->dateTimeBetween($arrivalDate, $arrivalDate->format('Y-m-d') . ' +10 days');
 
         return [
@@ -40,13 +40,17 @@ class ReservationFactory extends Factory
             'status' => function ($attributes) use ($arrivalDate, $departureDate) {
                 $today = Carbon::today();
                 $arrival = Carbon::parse($attributes['date_arrive']);
-                $departure = Carbon::parse($attributes['date_arrive']);
+                $departure = Carbon::parse($attributes['date_depart']); // Corrected variable name
 
-                if ($arrival->isBefore($today) && $departure->isBefore($today)) {
-                    return $this->faker->randomElement(['quitte', 'annule']);
-                } elseif ($arrival->isAfter($today)) {
+                if ($departure <= $today) {
+                    if ($arrival <= $today) {
+                        return $this->faker->randomElement(['quitte', 'annule']);
+                    }
+                } elseif ($arrival >= $today) {
                     return 'attente';
-                } elseif ($arrival->isSameAs($today)) {
+                } elseif ($arrival->isSameDay($today)) {
+                    return 'enregistre';
+                } else {
                     return 'enregistre';
                 }
             },
@@ -65,7 +69,11 @@ class ReservationFactory extends Factory
                 $nbr_jour = $attributes['nbr_jour'];
                 $chambreId = $attributes['chambre_id'];
                 $chambre = Chambre::find($chambreId);
-                $chambre->status = 'occupé';
+                $arrival = Carbon::parse($attributes['date_arrive']);
+                $today = Carbon::today();
+                if ($arrival->isSameDay($today)) {
+                    $chambre->status = 'occupé';
+                }
                 $chambre->save();
                 return $chambre->prix * $nbr_jour;
             },

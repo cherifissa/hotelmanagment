@@ -19,7 +19,7 @@ class UserController extends Controller
             'tel' => 'required|string|max:20',
             'email' => 'required|email|unique:users|max:255',
             'adresse' => 'required|string|max:255',
-            'isadmin' => 'required|in:admin,recept,client',
+            'isadmin' => 'required|in:admin,recept,client,server',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
@@ -46,7 +46,7 @@ class UserController extends Controller
             'tel' => 'required|string|max:20',
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
             'adresse' => 'required|string|max:255',
-            'isadmin' => 'required|in:admin,recept,client',
+            'isadmin' => 'required|in:admin,recept,client,server',
             'password' => 'required|string|min:6',
         ]);
 

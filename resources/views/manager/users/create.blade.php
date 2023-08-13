@@ -58,6 +58,8 @@
                                     <option value="admin" {{ old('isadmin') === 'admin' ? 'selected' : '' }}>Admin</option>
                                     <option value="recept" {{ old('isadmin') === 'recept' ? 'selected' : '' }}>Recept
                                     </option>
+                                    <option value="server" {{ old('isadmin') === 'server' ? 'selected' : '' }}>Server
+                                    </option>
                                     <option value="client" {{ old('isadmin') === 'client' ? 'selected' : '' }}>Client
                                     </option>
                                 </select>

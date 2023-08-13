@@ -79,7 +79,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('reservations', ReservationController::class)->except('show');
 })->name('adminindex');
 
-
+//restaurant
 Route::prefix('restaurant')->group(function () {
     Route::get('/', function () {
         return view('manager.restaurants.index');

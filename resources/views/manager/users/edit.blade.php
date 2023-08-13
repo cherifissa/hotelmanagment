@@ -60,6 +60,9 @@
                                         </option>
                                         <option value="recept" {{ old('isadmin') === 'recept' ? 'selected' : '' }}>Recept
                                         </option>
+                                        <option value="server" {{ old('isadmin') === 'server' ? 'selected' : '' }}>Server
+                                        </option>
+
                                     </select>
                                     @error('isadmin')
                                         <div class="text-danger">{{ $message }}</div>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('tel');
             $table->string('email')->unique();
             $table->string('adresse');
-            $table->enum('isadmin', ['admin', 'recept', 'client']);
+            $table->enum('isadmin', ['admin', 'recept', 'client', 'server']);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

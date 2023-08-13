@@ -29,7 +29,7 @@ class ServiceFactory extends Factory
         return [
             'type_service' => $this->faker->randomElement(['ptdej', 'dej', 'diner']),
             'type_payement' => $this->faker->randomElement(['cash', 'gratuite', 'reservation']),
-            'prix' => $this->faker->randomElement([10000, 15000, 20000, 25000]),
+            'prix' => $this->faker->randomElement([10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000]),
             'reservation_id' => $reservation->numero,
             'created_at' => $this->faker->dateTimeBetween($minDateArrive, $maxDateArrive),
         ];
