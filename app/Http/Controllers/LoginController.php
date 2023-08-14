@@ -27,7 +27,7 @@ class LoginController extends Controller
             return redirect()->intended();
         } else {
             // Invalid email or password, handle the authentication failure
-            return back()->withErrors(['erreur' => 'Email ou mot de passe invalide'])
+            return back()->withErrors(['erreur' => 'Email ou mot de passe incorrect'])
                 ->withInput(['email']);
         }
     }

@@ -3,41 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Commentaire;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CommentaireController extends Controller
 {
     public function index()
     {
-        // Retrieve all clients from the database
-        $commentaires = Commentaire::all();
+        $commentaires = Commentaire::paginate(5);
 
-        // Pass the clients data to the view for displaying
-        return view('manager.commentaires.index', ['clients' => $commentaires]);
-    }
-
-    public function create()
-    {
-        // Show the form to create a new client
-        return view('commentaire.create');
+        return view('manager.commentaires.index', ['commentaires' => $commentaires]);
     }
 
     public function store(Request $request)
     {
-        // Validate the input data from the request
         $validatedData = $request->validate([
-            'id_client' => 'required|string',
-            'text' => 'required|string',
-
+            'contenu' => 'required|string',
+            'client_id' => 'required',
         ]);
+        $clientJson = $validatedData['client_id'];
+        $client = json_decode($clientJson);
 
-        $client = Commentaire::create($validatedData);
-        return redirect()->route('accueil')->with('success', 'create.');
+        $validatedData['client_id'] = $client->id;
+
+        $commentaire = Commentaire::create($validatedData);
+        return redirect()->route('chambre')->with('success', 'create.');
     }
 
     public function destroy(Commentaire $commentaire)
     {
         $commentaire->delete();
-        return redirect()->route('clients.index')->with('successDelete', 'delete');
+        return redirect()->route('commentaires.index')->with('delete', 'delete');
     }
 }

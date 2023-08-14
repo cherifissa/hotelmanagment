@@ -56,6 +56,7 @@
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="form-group">
                                 <label for="status">Status</label>
                                 <select class="form-control" name="status">

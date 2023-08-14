@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Chambre;
 use App\Models\Reservation;
@@ -22,7 +23,7 @@ class ReservationController extends Controller
     public function create()
     {
         $users = User::all();
-        $chambres = Chambre::all();
+        $chambres = Chambre::where('status', '=', 'libre')->get();
         return view('manager.reservations.create', ['users' => $users, 'chambres' => $chambres]);
     }
     public function store(Request $request)
@@ -39,8 +40,14 @@ class ReservationController extends Controller
         ]);
 
         $chambre = Chambre::find($validatedData["chambre_id"]);
+        $today = Carbon::today();
+        $arrival = Carbon::parse($validatedData["date_arrive"]);
+        if ($arrival->isSameDay($today)) {
+            $chambre->status = 'occupé';
+            $chambre->save();
+        }
         $validatedData["prix"] = $chambre->prix * $validatedData["nbr_jour"];
-        //dd($validatedData["prix"]);
+        //dd($arrival->isSameDay($today));
         $validatedData["id"] = $this->generateUniqueNumero();
 
         $reservation = Reservation::create($validatedData);
@@ -83,7 +90,13 @@ class ReservationController extends Controller
             'date_arrive' => 'required|date|before:date_depart',
             'date_depart' => 'required|date|after:date_arrive',
         ]);
-
+        $chambre = Chambre::find($reservation->chambre_id);
+        $today = Carbon::today();
+        $arrival = Carbon::parse($validatedData["date_arrive"]);
+        if ($arrival->isSameDay($today)) {
+            $chambre->status = 'occupé';
+            $chambre->save();
+        }
 
         $reservation->update($validatedData);
 

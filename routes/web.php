@@ -39,7 +39,7 @@ Route::prefix('/')->group(function () {
         return view('accueil.index');
     })->name('accueil');
     Route::resource('/message', MessageController::class)->only('store');
-    Route::resource('commentaires', CommentaireController::class)->only('index', 'destroy', 'create', 'store');
+    Route::post('commentaire', [CommentaireController::class, 'store'])->name('commentairesend');
     Route::resource('demande_reservations', DemandeReservationController::class)->only('create', 'store');
     Route::get('/dasboard', [ClientDashboardController::class, 'index'])->name('dashboard');
 
@@ -54,7 +54,7 @@ Route::prefix('/')->group(function () {
     });
     Route::get('/chambre', function () {
         return view('chambre.chambre');
-    });
+    })->name('chambre');
     Route::get('/blog', function () {
         return view('blog.blog');
     });
@@ -76,6 +76,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('users', Usercontroller::class)->except('show');
     Route::resource('admins', AdminController::class)->only('index');
     Route::resource('clients', ClientController::class)->only('index');
+    Route::resource('commentaires', CommentaireController::class)->only('index', 'destroy');
     Route::resource('reservations', ReservationController::class)->except('show');
 })->name('adminindex');
 

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Commentaire extends Model
 {
     use HasFactory;
+
+    public $fillable = [
+        'contenu',
+        'client_id',
+    ];
 }

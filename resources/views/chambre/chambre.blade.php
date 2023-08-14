@@ -1,5 +1,25 @@
 @extends('layouts.reservations.app')
 @section('contente')
+    @if (session('success'))
+        <script type="text/javascript">
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Commentaire envoyé avec succès'
+            })
+        </script>
+    @endif
     <div class="back_re">
         <div class="container">
             <div class="row">
@@ -129,6 +149,20 @@
                     </div>
                 </div>
             </div>
+            @if (session()->has('client'))
+                <form action="{{ route('commentairesend') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="client_id" value="{{ session('client') }}">
+                    <div class="form-group">
+                        <label for="contenu">Laisser un commentaire</label>
+                        <textarea name="contenu" rows="3" class="form-control"></textarea>
+                        @error('contenu')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <button type="submit" class="btn btn-primary">Soumettre</button>
+                </form>
+            @endif
 
         </div>
     </div>
