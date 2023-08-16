@@ -18,8 +18,7 @@ use App\Http\Controllers\StatistiqueController;
 use App\Http\Middleware\AdminAccessMiddleware;
 use App\Http\Middleware\ReceptAccessMiddleware;
 use App\Http\Middleware\RestaurantAccessMiddleware;
-use FontLib\Table\Type\name;
-use PhpParser\Builder\Function_;
+
 
 /*
 |--------------------------------------------------------------------------

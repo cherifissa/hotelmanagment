@@ -22,6 +22,6 @@ class RestaurantAccessMiddleware
             return $next($request);
         }
 
-        return redirect('login');
+        return response()->view('middleware.customview', [], 200);
     }
 }

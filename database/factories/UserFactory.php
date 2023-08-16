@@ -21,16 +21,20 @@ class UserFactory extends Factory
     protected $model = User::class;
     private static $isAdminCreated = false;
     private static $receptCount = 0;
+    private static $serverCount = 0;
 
     public function definition()
     {
         $role = $this->getRole();
 
+        $email = $role === 'admin' ? 'admin@gmail.com' : $this->faker->unique()->email;
+
+
         return [
             'nom' => $this->faker->name,
             'tel' => $this->faker->phoneNumber,
-            'email' => $this->faker->unique()->safeEmail,
-            'password' => Hash::make('password'), // Correctly hash the password using Hash::make()
+            'email' => $email,
+            'password' => Hash::make('password'),
             'adresse' => $this->faker->address,
             'isadmin' => $role,
             'remember_token' => Str::random(10),
@@ -47,6 +51,11 @@ class UserFactory extends Factory
         if ($this::$receptCount < 2) {
             $this::$receptCount++;
             return 'recept';
+        }
+
+        if ($this::$serverCount < 2) {
+            $this::$serverCount++;
+            return 'server';
         }
 
         return 'client';

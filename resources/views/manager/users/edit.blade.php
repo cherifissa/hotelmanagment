@@ -16,7 +16,7 @@
                     <!-- form start -->
                     <form action="{{ route('users.update', $user) }}" method="POST">
                         @csrf
-                        @method('GET')
+                        @method('PUT')
                         <div class="card-body">
 
                             <div class="form-group">

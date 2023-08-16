@@ -84,7 +84,18 @@
                 <th scope="col">Prix</th>
                 <th scope="col">Statut</th>
                 <th scope="col">Description</th>
-                @if (session()->has('admin'))
+                @php
+                    $url = Route::current()->uri;
+                    $segments = explode('/', $url);
+                    $firstSegment = $segments[0];
+                    
+                    if ($firstSegment == 'admin') {
+                        $prefix = 'admin';
+                    } else {
+                        $prefix = 'recept';
+                    }
+                @endphp
+                @if ($prefix == 'admin')
                     <th scope="col">Actions</th>
                 @endif
             </tr>
@@ -97,7 +108,7 @@
                     <td>{{ $chambre->prix }}</td>
                     <td>{{ $chambre->status }}</td>
                     <td>{{ $chambre->description }}</td>
-                    @if (session()->has('admin'))
+                    @if ($prefix == 'admin')
                         <td>
                             <div class="d-flex justify-content-evenly">
                                 <a href="{{ route('chambres.edit', $chambre) }}" class="btn">

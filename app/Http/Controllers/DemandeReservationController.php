@@ -29,4 +29,10 @@ class DemandeReservationController extends Controller
 
         return redirect()->route('accueil')->with('success', 'successfully');
     }
+
+    public function destroy(DemandeReservation $demandeReservation)
+    {
+        $demandeReservation->delete();
+        return redirect()->route('demandes.index')->with('successDelete', 'successfully');
+    }
 }

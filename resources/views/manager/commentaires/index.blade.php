@@ -37,8 +37,20 @@
                 <th scope="col">ID</th>
                 <th scope="col">Message</th>
                 <th scope="col">Client infos</th>
-                <th scope="col">Actions</th>
-
+                @php
+                    $url = Route::current()->uri;
+                    $segments = explode('/', $url);
+                    $firstSegment = $segments[0];
+                    
+                    if ($firstSegment == 'admin') {
+                        $prefix = 'admin';
+                    } else {
+                        $prefix = 'recept';
+                    }
+                @endphp
+                @if ($prefix == 'admin')
+                    <th scope="col">Actions</th>
+                @endif
             </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -47,21 +59,23 @@
                     <th scope="row">{{ $commentaire->id }}</th>
                     <td>{{ $commentaire->contenu }}</td>
                     <td>{{ $commentaire->client_id }}</td>
-                    <td>
-                        <div class="d-flex justify-content-evenly">
-                            <form action="{{ route('commentaires.destroy', $commentaire) }}" id="delete-form"
-                                method="POST">
-                                @csrf
-                                @method('delete')
-                                <button class="btn btn-link" onclick="confirmeSuppression(event)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-                                        <path
-                                            d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" />
-                                    </svg>
-                                </button>
-                            </form>
-                        </div>
-                    </td>
+                    @if ($prefix == 'admin')
+                        <td>
+                            <div class="d-flex justify-content-evenly">
+                                <form action="{{ route('commentaires.destroy', $commentaire) }}" id="delete-form"
+                                    method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="btn btn-link" onclick="confirmeSuppression(event)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+                                            <path
+                                                d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" />
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    @endif
                 </tr>
             @endforeach
         </tbody>

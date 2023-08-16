@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('demande_reservations', function (Blueprint $table) {
             $table->id();
+            $table->string('nom_client', 100);
             $table->string('email_client', 75);
             $table->date('date_arrive');
             $table->date('date_depart');

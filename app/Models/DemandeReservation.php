@@ -10,6 +10,7 @@ class DemandeReservation extends Model
     use HasFactory;
 
     protected $fillable = [
+        'nom_client',
         'email_client',
         'date_arrive',
         'date_depart',

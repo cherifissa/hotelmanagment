@@ -16,6 +16,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Theme style -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
 
@@ -36,9 +39,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 class="fas fa-bars"></i></a>
                     </div>
                 </li>
+                @php
+                    $url = Route::current()->uri;
+                    $segments = explode('/', $url);
+                    $firstSegment = $segments[0];
+                    
+                    if ($firstSegment == 'admin') {
+                        $prefix = 'admin';
+                    } else {
+                        $prefix = 'recept';
+                    }
+                @endphp
+
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('admin', 'recept') ? 'active' : '' }}" aria-current="page"
-                        href="{{ request()->is('admin*') ? '/admin' : '/recept' }}">
+                    <a class="nav-link {{ request()->is("$prefix") ? 'active' : '' }}" aria-current="page"
+                        href="{{ '/' . $prefix }}">
                         <div class="d-flex align-items-center"> <i class="nav-icon fas fa-home"></i>
                             <p class="ml-2 mt-3">Accueil</p>
                         </div>
@@ -46,30 +61,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </li>
 
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link {{ request()->is('admin/chambres*') ? 'active' : '' }} " href="/admin/chambres">
+                    <a class="nav-link {{ request()->is($prefix . '/chambres*') ? 'active' : '' }} "
+                        href="{{ '/' . $prefix . '/chambres' }}">
                         <div class="d-flex align-items-center"><i class="nav-icon fas fa-house-user"></i>
                             <p class="ml-2 mt-3">Chambres</p>
                         </div>
                     </a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link {{ request()->is('admin/clients*') ? 'active' : '' }} " href="/admin/clients">
+                    <a class="nav-link {{ request()->is($prefix . '/clients*') ? 'active' : '' }} "
+                        href="{{ '/' . $prefix . '/clients' }}">
                         <div class="d-flex align-items-center"> <i class="nav-icon fas fa-users"></i>
                             <p class="ml-2 mt-3">Clients</p>
                         </div>
                     </a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link {{ request()->is('admin/reservations*') ? 'active' : '' }} "
-                        href="/admin/reservations">
+                    <a class="nav-link {{ request()->is($prefix . '/reservations*') ? 'active' : '' }} "
+                        href="{{ '/' . $prefix . '/reservations' }}">
                         <div class="d-flex align-items-center"> <i class="nav-icon fa fa-receipt"></i>
                             <p class="ml-2 mt-3">Reservations</p>
                         </div>
                     </a>
                 </li>
-                @if (session()->has('admin'))
+                @if ($prefix == 'admin')
                     <li class="nav-item d-none d-sm-inline-block">
-                        <a class="nav-link {{ request()->is('admin/admins*') ? 'active' : '' }} " href="/admin/admins">
+                        <a class="nav-link {{ request()->is('admin/admins*') ? 'active' : '' }} "
+                            href="{{ '/' . $prefix . '/admins' }}">
                             <div class="d-flex align-items-center"><i class="nav-icon fas fa-users"></i>
                                 <p class="ml-2 mt-3">Utilisateurs</p>
                             </div>
@@ -77,7 +95,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </li>
                 @endif
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link {{ request()->is('admin/demandes') ? 'active' : '' }} " href="/admin/demandes">
+                    <a class="nav-link {{ request()->is('admin/demandes') ? 'active' : '' }} "
+                        href="{{ '/' . $prefix . '/demandes' }}">
                         <div class="d-flex align-items-center">
                             <i class="nav-icon fa fa-bookmark"></i>
                             <p class="ml-2 mt-3">Demandes de réservation</p>
@@ -85,14 +104,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link {{ request()->is('admin/messages') ? 'active' : '' }} " href="/admin/messages">
+                    <a class="nav-link {{ request()->is($prefix . '/messages') ? 'active' : '' }} "
+                        href="{{ '/' . $prefix . '/messages' }}">
                         <div class="d-flex align-items-center">
                             <i class="nav-icon fa fa-envelope"></i>
                             <p class="ml-2 mt-3">Messages</p>
                         </div>
                     </a>
                 </li>
-                @if (session()->has('admin'))
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link {{ request()->is($prefix . '/commentaires') ? 'active' : '' }} "
+                        href="{{ '/' . $prefix . '/commentaires' }}">
+                        <div class="d-flex align-items-center">
+                            <i class="nav-icon fa fa-comment"></i>
+                            <p class="ml-2 mt-3">Commentaires</p>
+                        </div>
+                    </a>
+                </li>
+                @if ($prefix == 'admin')
                     <li class="nav-item d-none d-sm-inline-block">
                         <a class="nav-link {{ request()->is('admin/statistiques') ? 'active' : '' }} "
                             href="/admin/statistiques">
@@ -116,14 +145,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </li>
 
                 <li class="nav-item ">
-                    @if (session()->has('admin'))
+                    @if ($prefix == 'admin')
                         <form action="{{ route('disconnect', session('admin')) }}" method="post">@csrf
                             <button type="submit" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i></button>
                         </form>
                     @else
                         <form action="{{ route('disconnect', session('recept')) }}" method="post">
                             @csrf
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i></button>
+                            <button type="submit" class="btn btn-danger"><i
+                                    class="fas fa-sign-out-alt"></i></button>
                         </form>
                     @endif
                 </li>
@@ -143,19 +173,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Sidebar -->
             <div class="sidebar">
 
-                <!-- SidebarSearch Form -->
-                <div class="form-inline">
-                    <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                            aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-sidebar">
-                                <i class="fas fa-search fa-fw"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -170,7 +187,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                             <ul class="nav nav-treeview" style="display: none;">
                                 <li class="nav-item">
-                                    @if (session()->has('recept'))
+                                    @if ($prefix == 'recept')
                                         <a href="{{ route('chambrerecept') }}" class="nav-link ">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Liste des chambres</p>
@@ -193,7 +210,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                         <li class="nav-item">
                             <a href="#"
-                                class="nav-link  {{ request()->is('admin/clients*') ? 'active' : '' }} ">
+                                class="nav-link  {{ request()->is($prefix . '/clients*') ? 'active' : '' }} ">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     Clients
@@ -217,7 +234,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
                         <li class="nav-item">
                             <a href="#"
-                                class="nav-link  {{ request()->is('admin/reservations*') ? 'active' : '' }} ">
+                                class="nav-link  {{ request()->is($prefix . '/reservations*') ? 'active' : '' }} ">
                                 <i class="nav-icon fa fa-receipt"></i>
                                 <p>
                                     Reservations
@@ -239,7 +256,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                             </ul>
                         </li>
-                        @if (session()->has('admin'))
+                        @if ($prefix == 'admin')
                             <li class="nav-item">
                                 <a href="#"
                                     class="nav-link  {{ request()->is('admin/admins*') ? 'active' : '' }} ">
@@ -266,7 +283,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </li>
                         @endif
                         <li class="nav-item">
-                            <a href="#" class="nav-link  {{ request()->is('*/demandes') ? 'active' : '' }} ">
+                            <a href="#"
+                                class="nav-link  {{ request()->is($prefix . '/demandes') ? 'active' : '' }} ">
                                 <i class="nav-icon fa fa-bookmark"></i>
                                 <p>
                                     Demandes de réservation
@@ -283,7 +301,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link  {{ request()->is('*/messages*') ? 'active' : '' }} ">
+                            <a href="#"
+                                class="nav-link  {{ request()->is($prefix . '/messages*') ? 'active' : '' }} ">
                                 <i class="nav-icon fa fa-envelope"></i>
                                 <p>
                                     Messages
@@ -300,12 +319,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </ul>
                         </li>
                     </ul>
-                    @if (session()->has('admin'))
+                    @if ($prefix == 'admin')
                         <ul class="nav nav-bottom nav-sidebar flex-column" data-widget="treeview" role="menu">
 
                             <li class="nav-item mt-auto">
                                 <a href="{{ url('admin/statistiques') }}"
-                                    class="nav-link  {{ request()->is('admin/statistiques*') ? 'active' : '' }} ">
+                                    class="nav-link  {{ request()->is($prefix . '/statistiques*') ? 'active' : '' }} ">
                                     <i class="nav-icon fas fa-chart-bar"></i>
                                     <p>Statistiques</p>
                                 </a>
@@ -316,7 +335,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                         <li class="nav-item mt-auto">
                             <a href="{{ route('profile.index') }}"
-                                class="nav-link  {{ request()->is('admin/profile*') ? 'active' : '' }} ">
+                                class="nav-link  {{ request()->is($prefix . '/profile*') ? 'active' : '' }} ">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>Profile</p>
                             </a>
@@ -382,11 +401,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('js/highchart.js') }}"></script>
     <script src="{{ asset('js/accessibility.js') }}"></script>
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-    <script src="{{ asset('js/jspdf.min.js') }}"></script>
-    >
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="{{ asset('js/jspdf.umd.min.js') }}"></script>
+    <script src="{{ asset('js/html2canvas.min.js') }}"></script>
+    <script src="{{ asset('js/html2pdf.min.js') }}"></script>
+
 </body>
 
 </html>

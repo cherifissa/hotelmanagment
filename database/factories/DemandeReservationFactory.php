@@ -24,6 +24,7 @@ class DemandeReservationFactory extends Factory
         $typesChambre = ['standard', 'privilege', 'suite junior', 'suite famille', 'suite VIP', 'suite presidentielle'];
 
         return [
+            'nom_client' => $this->faker->name(),
             'email_client' => $this->faker->unique()->safeEmail,
             'date_arrive' => $this->faker->dateTimeBetween('now', '+1 weeks')->format('Y-m-d'),
             'date_depart' => $this->faker->dateTimeBetween('+1 day', '+1 weeks')->format('Y-m-d'),

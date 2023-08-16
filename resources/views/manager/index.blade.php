@@ -4,21 +4,59 @@
 @endsection
 @section('content')
     <section class="content">
+        @php
+            use Illuminate\Support\Facades\DB;
+            
+            use App\Models\User;
+            use App\Models\Chambre;
+            use App\Models\Reservation;
+            use App\Models\DemandeReservation;
+            use App\Models\Services;
+            use App\Models\Commentaire;
+            use App\Models\Message;
+            
+            $tableCounts = [
+                'clients' => DB::table('users')
+                    ->where('isadmin', 'client')
+                    ->count(),
+                'chambres' => DB::table('chambres')->count(),
+                'reservations' => DB::table('reservations')->count(),
+                'demandes' => DB::table('demande_reservations')->count(),
+                'services' => DB::table('services')->count(),
+                'users' => DB::table('users')
+                    ->where('isadmin', '<>', 'client')
+                    ->count(),
+                'commentaires' => DB::table('commentaires')->count(),
+                'messages' => DB::table('messages')->count(),
+            ];
+            
+            $url = Route::current()->uri;
+            $segments = explode('/', $url);
+            $firstSegment = $segments[0];
+            
+            if ($firstSegment == 'admin') {
+                $prefix = 'admin';
+            } else {
+                $prefix = 'recept';
+            }
+            
+        @endphp
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
+
             <div class="row">
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>150</h3>
-
-                            <p>New Orders</p>
+                            <h3>{{ $tableCounts['clients'] }}</h3>
+                            <p>Les client</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{ $prefix . '/clients' }}" class="small-box-footer">Plus d'info <i
+                                class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -26,29 +64,14 @@
                     <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                            <p>Bounce Rate</p>
+                            <h3>{{ $tableCounts['chambres'] }}</h3>
+                            <p>Les Chambres</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
+                            <i class="ion ion-bag"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>44</h3>
-
-                            <p>User Registrations</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{ $prefix . '/chambres' }}" class="small-box-footer">Plus d'info <i
+                                class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -56,411 +79,377 @@
                     <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>65</h3>
-
-                            <p>Unique Visitors</p>
+                            <h3>{{ $tableCounts['reservations'] }}</h3>
+                            <p>Les Réservations</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
+                            <i class="ion ion-bag"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{ $prefix . '/reservations' }}" class="small-box-footer">Plus d'info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>{{ $tableCounts['demandes'] }}</h3>
+                            <p>Les demandes de Réservations</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="{{ $prefix . '/demandes' }}" class="small-box-footer">Plus d'info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-indigo">
+                        <div class="inner">
+                            <h3>{{ $tableCounts['users'] }}</h3>
+                            <p>Les Utilisateurs</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="{{ $prefix . '/admins' }}" class="small-box-footer">Plus d'info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-pink">
+                        <div class="inner">
+                            <h3>{{ $tableCounts['commentaires'] }}</h3>
+                            <p>Les Commentaires</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="{{ $prefix . '/commentaires' }}" class="small-box-footer">Plus d'info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-purple">
+                        <div class="inner">
+                            <h3>{{ $tableCounts['services'] }}</h3>
+                            <p>Les Services</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="{{ $prefix . '/services' }}" class="small-box-footer">Plus d'info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-lime">
+                        <div class="inner">
+                            <h3>{{ $tableCounts['messages'] }}</h3>
+                            <p>Les Messages</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="{{ $prefix . '/messages' }}" class="small-box-footer">Plus d'info <i
+                                class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
             </div>
+
             <!-- /.row -->
             <!-- Main row -->
             <div class="row">
                 <!-- Left col -->
                 <section class="col-lg-7 connectedSortable ui-sortable">
-                    <!-- Custom tabs (Charts with tabs)-->
-                    <div class="card">
-                        <div class="card-header ui-sortable-handle" style="cursor: move;">
-                            <h3 class="card-title">
-                                <i class="fas fa-chart-pie mr-1"></i>
-                                Sales
-                            </h3>
-                            <div class="card-tools">
-                                <ul class="nav nav-pills ml-auto">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div><!-- /.card-header -->
-                        <div class="card-body">
-                            <div class="tab-content p-0">
-                                <!-- Morris chart - Sales -->
-                                <div class="chart tab-pane active" id="revenue-chart"
-                                    style="position: relative; height: 300px;">
-                                    <div class="chartjs-size-monitor">
-                                        <div class="chartjs-size-monitor-expand">
-                                            <div class=""></div>
-                                        </div>
-                                        <div class="chartjs-size-monitor-shrink">
-                                            <div class=""></div>
-                                        </div>
-                                    </div>
-                                    <canvas id="revenue-chart-canvas" height="375"
-                                        style="height: 300px; display: block; width: 863px;" width="1078"
-                                        class="chartjs-render-monitor"></canvas>
-                                </div>
-                                <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                                    <canvas id="sales-chart-canvas" height="0"
-                                        style="height: 0px; display: block; width: 0px;" width="0"
-                                        class="chartjs-render-monitor"></canvas>
-                                </div>
-                            </div>
-                        </div><!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
+                    <!-- Calendar -->
+                    <div class="card bg-gradient-success">
 
-                    <!-- DIRECT CHAT -->
-                    <div class="card direct-chat direct-chat-primary">
-                        <div class="card-header ui-sortable-handle" style="cursor: move;">
-                            <h3 class="card-title">Direct Chat</h3>
-
-                            <div class="card-tools">
-                                <span title="3 New Messages" class="badge badge-primary">3</span>
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
-                                    <i class="fas fa-comments"></i>
-                                </button>
-                                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
                         <!-- /.card-header -->
-                        <div class="card-body">
-                            <!-- Conversations are loaded here -->
-                            <div class="direct-chat-messages">
-                                <!-- Message. Default to the left -->
-                                <div class="direct-chat-msg">
-                                    <div class="direct-chat-infos clearfix">
-                                        <span class="direct-chat-name float-left">Alexander Pierce</span>
-                                        <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
-                                    </div>
-                                    <!-- /.direct-chat-infos -->
-                                    <img class="direct-chat-img" src="dist/img/user1-128x128.jpg"
-                                        alt="message user image">
-                                    <!-- /.direct-chat-img -->
-                                    <div class="direct-chat-text">
-                                        Is this template really for free? That's unbelievable!
-                                    </div>
-                                    <!-- /.direct-chat-text -->
+                        <div class="card-body pt-0">
+                            <!--The calendar -->
+                            <div id="calendar" style="width: 100%">
+                                <div class="bootstrap-datetimepicker-widget usetwentyfour">
+                                    <ul class="list-unstyled">
+                                        <li class="show">
+                                            <div class="datepicker">
+                                                <div class="datepicker-days" style="">
+                                                    <table class="table table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="prev" data-action="previous"><span
+                                                                        class="fa fa-chevron-left"
+                                                                        title="Previous Month"></span></th>
+                                                                <th class="picker-switch" data-action="pickerSwitch"
+                                                                    colspan="5" title="Select Month">July 2023</th>
+                                                                <th class="next" data-action="next"><span
+                                                                        class="fa fa-chevron-right"
+                                                                        title="Next Month"></span></th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="dow">Su</th>
+                                                                <th class="dow">Mo</th>
+                                                                <th class="dow">Tu</th>
+                                                                <th class="dow">We</th>
+                                                                <th class="dow">Th</th>
+                                                                <th class="dow">Fr</th>
+                                                                <th class="dow">Sa</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td data-action="selectDay" data-day="06/25/2023"
+                                                                    class="day old weekend">25</td>
+                                                                <td data-action="selectDay" data-day="06/26/2023"
+                                                                    class="day old">26</td>
+                                                                <td data-action="selectDay" data-day="06/27/2023"
+                                                                    class="day old">27</td>
+                                                                <td data-action="selectDay" data-day="06/28/2023"
+                                                                    class="day old">28</td>
+                                                                <td data-action="selectDay" data-day="06/29/2023"
+                                                                    class="day old">29</td>
+                                                                <td data-action="selectDay" data-day="06/30/2023"
+                                                                    class="day old">30</td>
+                                                                <td data-action="selectDay" data-day="07/01/2023"
+                                                                    class="day weekend">1</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td data-action="selectDay" data-day="07/02/2023"
+                                                                    class="day weekend">2</td>
+                                                                <td data-action="selectDay" data-day="07/03/2023"
+                                                                    class="day">3</td>
+                                                                <td data-action="selectDay" data-day="07/04/2023"
+                                                                    class="day">4</td>
+                                                                <td data-action="selectDay" data-day="07/05/2023"
+                                                                    class="day">5</td>
+                                                                <td data-action="selectDay" data-day="07/06/2023"
+                                                                    class="day">6</td>
+                                                                <td data-action="selectDay" data-day="07/07/2023"
+                                                                    class="day">7</td>
+                                                                <td data-action="selectDay" data-day="07/08/2023"
+                                                                    class="day weekend">8</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td data-action="selectDay" data-day="07/09/2023"
+                                                                    class="day weekend">9</td>
+                                                                <td data-action="selectDay" data-day="07/10/2023"
+                                                                    class="day">10</td>
+                                                                <td data-action="selectDay" data-day="07/11/2023"
+                                                                    class="day">11</td>
+                                                                <td data-action="selectDay" data-day="07/12/2023"
+                                                                    class="day">12</td>
+                                                                <td data-action="selectDay" data-day="07/13/2023"
+                                                                    class="day">13</td>
+                                                                <td data-action="selectDay" data-day="07/14/2023"
+                                                                    class="day">14</td>
+                                                                <td data-action="selectDay" data-day="07/15/2023"
+                                                                    class="day weekend">15</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td data-action="selectDay" data-day="07/16/2023"
+                                                                    class="day weekend">16</td>
+                                                                <td data-action="selectDay" data-day="07/17/2023"
+                                                                    class="day">17</td>
+                                                                <td data-action="selectDay" data-day="07/18/2023"
+                                                                    class="day active today">18</td>
+                                                                <td data-action="selectDay" data-day="07/19/2023"
+                                                                    class="day">19</td>
+                                                                <td data-action="selectDay" data-day="07/20/2023"
+                                                                    class="day">20</td>
+                                                                <td data-action="selectDay" data-day="07/21/2023"
+                                                                    class="day">21</td>
+                                                                <td data-action="selectDay" data-day="07/22/2023"
+                                                                    class="day weekend">22</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td data-action="selectDay" data-day="07/23/2023"
+                                                                    class="day weekend">23</td>
+                                                                <td data-action="selectDay" data-day="07/24/2023"
+                                                                    class="day">24</td>
+                                                                <td data-action="selectDay" data-day="07/25/2023"
+                                                                    class="day">25</td>
+                                                                <td data-action="selectDay" data-day="07/26/2023"
+                                                                    class="day">26</td>
+                                                                <td data-action="selectDay" data-day="07/27/2023"
+                                                                    class="day">27</td>
+                                                                <td data-action="selectDay" data-day="07/28/2023"
+                                                                    class="day">28</td>
+                                                                <td data-action="selectDay" data-day="07/29/2023"
+                                                                    class="day weekend">29</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td data-action="selectDay" data-day="07/30/2023"
+                                                                    class="day weekend">30</td>
+                                                                <td data-action="selectDay" data-day="07/31/2023"
+                                                                    class="day">31</td>
+                                                                <td data-action="selectDay" data-day="08/01/2023"
+                                                                    class="day new">1</td>
+                                                                <td data-action="selectDay" data-day="08/02/2023"
+                                                                    class="day new">2</td>
+                                                                <td data-action="selectDay" data-day="08/03/2023"
+                                                                    class="day new">3</td>
+                                                                <td data-action="selectDay" data-day="08/04/2023"
+                                                                    class="day new">4</td>
+                                                                <td data-action="selectDay" data-day="08/05/2023"
+                                                                    class="day new weekend">5</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="datepicker-months" style="display: none;">
+                                                    <table class="table-condensed">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="prev" data-action="previous"><span
+                                                                        class="fa fa-chevron-left"
+                                                                        title="Previous Year"></span></th>
+                                                                <th class="picker-switch" data-action="pickerSwitch"
+                                                                    colspan="5" title="Select Year">2023</th>
+                                                                <th class="next" data-action="next"><span
+                                                                        class="fa fa-chevron-right"
+                                                                        title="Next Year"></span></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="7"><span data-action="selectMonth"
+                                                                        class="month">Jan</span><span
+                                                                        data-action="selectMonth"
+                                                                        class="month">Feb</span><span
+                                                                        data-action="selectMonth"
+                                                                        class="month">Mar</span><span
+                                                                        data-action="selectMonth"
+                                                                        class="month">Apr</span><span
+                                                                        data-action="selectMonth"
+                                                                        class="month">May</span><span
+                                                                        data-action="selectMonth"
+                                                                        class="month">Jun</span><span
+                                                                        data-action="selectMonth"
+                                                                        class="month active">Jul</span><span
+                                                                        data-action="selectMonth"
+                                                                        class="month">Aug</span><span
+                                                                        data-action="selectMonth"
+                                                                        class="month">Sep</span><span
+                                                                        data-action="selectMonth"
+                                                                        class="month">Oct</span><span
+                                                                        data-action="selectMonth"
+                                                                        class="month">Nov</span><span
+                                                                        data-action="selectMonth"
+                                                                        class="month">Dec</span>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="datepicker-years" style="display: none;">
+                                                    <table class="table-condensed">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="prev" data-action="previous"><span
+                                                                        class="fa fa-chevron-left"
+                                                                        title="Previous Decade"></span></th>
+                                                                <th class="picker-switch" data-action="pickerSwitch"
+                                                                    colspan="5" title="Select Decade">2020-2029</th>
+                                                                <th class="next" data-action="next"><span
+                                                                        class="fa fa-chevron-right"
+                                                                        title="Next Decade"></span></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="7"><span data-action="selectYear"
+                                                                        class="year old">2019</span><span
+                                                                        data-action="selectYear"
+                                                                        class="year">2020</span><span
+                                                                        data-action="selectYear"
+                                                                        class="year">2021</span><span
+                                                                        data-action="selectYear"
+                                                                        class="year">2022</span><span
+                                                                        data-action="selectYear"
+                                                                        class="year active">2023</span><span
+                                                                        data-action="selectYear"
+                                                                        class="year">2024</span><span
+                                                                        data-action="selectYear"
+                                                                        class="year">2025</span><span
+                                                                        data-action="selectYear"
+                                                                        class="year">2026</span><span
+                                                                        data-action="selectYear"
+                                                                        class="year">2027</span><span
+                                                                        data-action="selectYear"
+                                                                        class="year">2028</span><span
+                                                                        data-action="selectYear"
+                                                                        class="year">2029</span><span
+                                                                        data-action="selectYear"
+                                                                        class="year old">2030</span></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="datepicker-decades" style="display: none;">
+                                                    <table class="table-condensed">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="prev" data-action="previous"><span
+                                                                        class="fa fa-chevron-left"
+                                                                        title="Previous Century"></span></th>
+                                                                <th class="picker-switch" data-action="pickerSwitch"
+                                                                    colspan="5">2000-2090</th>
+                                                                <th class="next" data-action="next"><span
+                                                                        class="fa fa-chevron-right"
+                                                                        title="Next Century"></span></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="7"><span data-action="selectDecade"
+                                                                        class="decade old"
+                                                                        data-selection="2006">1990</span><span
+                                                                        data-action="selectDecade" class="decade"
+                                                                        data-selection="2006">2000</span><span
+                                                                        data-action="selectDecade" class="decade"
+                                                                        data-selection="2016">2010</span><span
+                                                                        data-action="selectDecade" class="decade active"
+                                                                        data-selection="2026">2020</span><span
+                                                                        data-action="selectDecade" class="decade"
+                                                                        data-selection="2036">2030</span><span
+                                                                        data-action="selectDecade" class="decade"
+                                                                        data-selection="2046">2040</span><span
+                                                                        data-action="selectDecade" class="decade"
+                                                                        data-selection="2056">2050</span><span
+                                                                        data-action="selectDecade" class="decade"
+                                                                        data-selection="2066">2060</span><span
+                                                                        data-action="selectDecade" class="decade"
+                                                                        data-selection="2076">2070</span><span
+                                                                        data-action="selectDecade" class="decade"
+                                                                        data-selection="2086">2080</span><span
+                                                                        data-action="selectDecade" class="decade"
+                                                                        data-selection="2096">2090</span><span
+                                                                        data-action="selectDecade" class="decade old"
+                                                                        data-selection="2106">2100</span></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="picker-switch accordion-toggle"></li>
+                                    </ul>
                                 </div>
-                                <!-- /.direct-chat-msg -->
-
-                                <!-- Message to the right -->
-                                <div class="direct-chat-msg right">
-                                    <div class="direct-chat-infos clearfix">
-                                        <span class="direct-chat-name float-right">Sarah Bullock</span>
-                                        <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
-                                    </div>
-                                    <!-- /.direct-chat-infos -->
-                                    <img class="direct-chat-img" src="dist/img/user3-128x128.jpg"
-                                        alt="message user image">
-                                    <!-- /.direct-chat-img -->
-                                    <div class="direct-chat-text">
-                                        You better believe it!
-                                    </div>
-                                    <!-- /.direct-chat-text -->
-                                </div>
-                                <!-- /.direct-chat-msg -->
-
-                                <!-- Message. Default to the left -->
-                                <div class="direct-chat-msg">
-                                    <div class="direct-chat-infos clearfix">
-                                        <span class="direct-chat-name float-left">Alexander Pierce</span>
-                                        <span class="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
-                                    </div>
-                                    <!-- /.direct-chat-infos -->
-                                    <img class="direct-chat-img" src="dist/img/user1-128x128.jpg"
-                                        alt="message user image">
-                                    <!-- /.direct-chat-img -->
-                                    <div class="direct-chat-text">
-                                        Working with AdminLTE on a great new app! Wanna join?
-                                    </div>
-                                    <!-- /.direct-chat-text -->
-                                </div>
-                                <!-- /.direct-chat-msg -->
-
-                                <!-- Message to the right -->
-                                <div class="direct-chat-msg right">
-                                    <div class="direct-chat-infos clearfix">
-                                        <span class="direct-chat-name float-right">Sarah Bullock</span>
-                                        <span class="direct-chat-timestamp float-left">23 Jan 6:10 pm</span>
-                                    </div>
-                                    <!-- /.direct-chat-infos -->
-                                    <img class="direct-chat-img" src="dist/img/user3-128x128.jpg"
-                                        alt="message user image">
-                                    <!-- /.direct-chat-img -->
-                                    <div class="direct-chat-text">
-                                        I would love to.
-                                    </div>
-                                    <!-- /.direct-chat-text -->
-                                </div>
-                                <!-- /.direct-chat-msg -->
-
                             </div>
-                            <!--/.direct-chat-messages-->
-
-                            <!-- Contacts are loaded here -->
-                            <div class="direct-chat-contacts">
-                                <ul class="contacts-list">
-                                    <li>
-                                        <a href="#">
-                                            <img class="contacts-list-img" src="dist/img/user1-128x128.jpg"
-                                                alt="User Avatar">
-
-                                            <div class="contacts-list-info">
-                                                <span class="contacts-list-name">
-                                                    Count Dracula
-                                                    <small class="contacts-list-date float-right">2/28/2015</small>
-                                                </span>
-                                                <span class="contacts-list-msg">How have you been? I was...</span>
-                                            </div>
-                                            <!-- /.contacts-list-info -->
-                                        </a>
-                                    </li>
-                                    <!-- End Contact Item -->
-                                    <li>
-                                        <a href="#">
-                                            <img class="contacts-list-img" src="dist/img/user7-128x128.jpg"
-                                                alt="User Avatar">
-
-                                            <div class="contacts-list-info">
-                                                <span class="contacts-list-name">
-                                                    Sarah Doe
-                                                    <small class="contacts-list-date float-right">2/23/2015</small>
-                                                </span>
-                                                <span class="contacts-list-msg">I will be waiting for...</span>
-                                            </div>
-                                            <!-- /.contacts-list-info -->
-                                        </a>
-                                    </li>
-                                    <!-- End Contact Item -->
-                                    <li>
-                                        <a href="#">
-                                            <img class="contacts-list-img" src="dist/img/user3-128x128.jpg"
-                                                alt="User Avatar">
-
-                                            <div class="contacts-list-info">
-                                                <span class="contacts-list-name">
-                                                    Nadia Jolie
-                                                    <small class="contacts-list-date float-right">2/20/2015</small>
-                                                </span>
-                                                <span class="contacts-list-msg">I'll call you back at...</span>
-                                            </div>
-                                            <!-- /.contacts-list-info -->
-                                        </a>
-                                    </li>
-                                    <!-- End Contact Item -->
-                                    <li>
-                                        <a href="#">
-                                            <img class="contacts-list-img" src="dist/img/user5-128x128.jpg"
-                                                alt="User Avatar">
-
-                                            <div class="contacts-list-info">
-                                                <span class="contacts-list-name">
-                                                    Nora S. Vans
-                                                    <small class="contacts-list-date float-right">2/10/2015</small>
-                                                </span>
-                                                <span class="contacts-list-msg">Where is your new...</span>
-                                            </div>
-                                            <!-- /.contacts-list-info -->
-                                        </a>
-                                    </li>
-                                    <!-- End Contact Item -->
-                                    <li>
-                                        <a href="#">
-                                            <img class="contacts-list-img" src="dist/img/user6-128x128.jpg"
-                                                alt="User Avatar">
-
-                                            <div class="contacts-list-info">
-                                                <span class="contacts-list-name">
-                                                    John K.
-                                                    <small class="contacts-list-date float-right">1/27/2015</small>
-                                                </span>
-                                                <span class="contacts-list-msg">Can I take a look at...</span>
-                                            </div>
-                                            <!-- /.contacts-list-info -->
-                                        </a>
-                                    </li>
-                                    <!-- End Contact Item -->
-                                    <li>
-                                        <a href="#">
-                                            <img class="contacts-list-img" src="dist/img/user8-128x128.jpg"
-                                                alt="User Avatar">
-
-                                            <div class="contacts-list-info">
-                                                <span class="contacts-list-name">
-                                                    Kenneth M.
-                                                    <small class="contacts-list-date float-right">1/4/2015</small>
-                                                </span>
-                                                <span class="contacts-list-msg">Never mind I found...</span>
-                                            </div>
-                                            <!-- /.contacts-list-info -->
-                                        </a>
-                                    </li>
-                                    <!-- End Contact Item -->
-                                </ul>
-                                <!-- /.contacts-list -->
-                            </div>
-                            <!-- /.direct-chat-pane -->
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer">
-                            <form action="#" method="post">
-                                <div class="input-group">
-                                    <input type="text" name="message" placeholder="Type Message ..."
-                                        class="form-control">
-                                    <span class="input-group-append">
-                                        <button type="button" class="btn btn-primary">Send</button>
-                                    </span>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.card-footer-->
-                    </div>
-                    <!--/.direct-chat -->
-
-                    <!-- TO DO List -->
-                    <div class="card">
-                        <div class="card-header ui-sortable-handle" style="cursor: move;">
-                            <h3 class="card-title">
-                                <i class="ion ion-clipboard mr-1"></i>
-                                To Do List
-                            </h3>
-
-                            <div class="card-tools">
-                                <ul class="pagination pagination-sm">
-                                    <li class="page-item"><a href="#" class="page-link">«</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">»</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <ul class="todo-list ui-sortable" data-widget="todo-list">
-                                <li>
-                                    <!-- drag handle -->
-                                    <span class="handle ui-sortable-handle">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </span>
-                                    <!-- checkbox -->
-                                    <div class="icheck-primary d-inline ml-2">
-                                        <input type="checkbox" value="" name="todo1" id="todoCheck1">
-                                        <label for="todoCheck1"></label>
-                                    </div>
-                                    <!-- todo text -->
-                                    <span class="text">Design a nice theme</span>
-                                    <!-- Emphasis label -->
-                                    <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
-                                    <!-- General tools such as edit or delete-->
-                                    <div class="tools">
-                                        <i class="fas fa-edit"></i>
-                                        <i class="fas fa-trash-o"></i>
-                                    </div>
-                                </li>
-                                <li class="done">
-                                    <span class="handle ui-sortable-handle">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </span>
-                                    <div class="icheck-primary d-inline ml-2">
-                                        <input type="checkbox" value="" name="todo2" id="todoCheck2"
-                                            checked="">
-                                        <label for="todoCheck2"></label>
-                                    </div>
-                                    <span class="text">Make the theme responsive</span>
-                                    <small class="badge badge-info"><i class="far fa-clock"></i> 4 hours</small>
-                                    <div class="tools">
-                                        <i class="fas fa-edit"></i>
-                                        <i class="fas fa-trash-o"></i>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="handle ui-sortable-handle">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </span>
-                                    <div class="icheck-primary d-inline ml-2">
-                                        <input type="checkbox" value="" name="todo3" id="todoCheck3">
-                                        <label for="todoCheck3"></label>
-                                    </div>
-                                    <span class="text">Let theme shine like a star</span>
-                                    <small class="badge badge-warning"><i class="far fa-clock"></i> 1 day</small>
-                                    <div class="tools">
-                                        <i class="fas fa-edit"></i>
-                                        <i class="fas fa-trash-o"></i>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="handle ui-sortable-handle">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </span>
-                                    <div class="icheck-primary d-inline ml-2">
-                                        <input type="checkbox" value="" name="todo4" id="todoCheck4">
-                                        <label for="todoCheck4"></label>
-                                    </div>
-                                    <span class="text">Let theme shine like a star</span>
-                                    <small class="badge badge-success"><i class="far fa-clock"></i> 3 days</small>
-                                    <div class="tools">
-                                        <i class="fas fa-edit"></i>
-                                        <i class="fas fa-trash-o"></i>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="handle ui-sortable-handle">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </span>
-                                    <div class="icheck-primary d-inline ml-2">
-                                        <input type="checkbox" value="" name="todo5" id="todoCheck5">
-                                        <label for="todoCheck5"></label>
-                                    </div>
-                                    <span class="text">Check your messages and notifications</span>
-                                    <small class="badge badge-primary"><i class="far fa-clock"></i> 1 week</small>
-                                    <div class="tools">
-                                        <i class="fas fa-edit"></i>
-                                        <i class="fas fa-trash-o"></i>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="handle ui-sortable-handle">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </span>
-                                    <div class="icheck-primary d-inline ml-2">
-                                        <input type="checkbox" value="" name="todo6" id="todoCheck6">
-                                        <label for="todoCheck6"></label>
-                                    </div>
-                                    <span class="text">Let theme shine like a star</span>
-                                    <small class="badge badge-secondary"><i class="far fa-clock"></i> 1 month</small>
-                                    <div class="tools">
-                                        <i class="fas fa-edit"></i>
-                                        <i class="fas fa-trash-o"></i>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer clearfix">
-                            <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add
-                                item</button>
-                        </div>
                     </div>
                     <!-- /.card -->
                 </section>
@@ -490,8 +479,8 @@
                         <div class="card-body">
                             <div id="world-map"
                                 style="height: 250px; width: 100%; position: relative; overflow: hidden; background-color: transparent;">
-                                <svg width="863.4" height="250">
-                                    <g transform="scale(0.42158516020236086) translate(544.4924, 0)">
+                                <svg width="443.131" height="250">
+                                    <g transform="scale(0.42158516020236086) translate(46.053366000000004, 0)">
                                         <path
                                             d="m244.66,512.25c-2.48,3.8 2.23,4.04 4.74,5.38 3.06,0.16 3.51,-4.28 2.66,-6.56 -2.72,-0.77 -5.01,-0.19 -7.41,1.19z m-9.31,3.97c-4.02,5.11 3.64,0.48 0.63,-0.09l-0.5,0.07 -0.14,0.02z m39.69,7.97c-0.62,2.09 1.91,6.73 4.39,6.2 2.41,-1.46 3.73,1.73 6.48,0.56 1.23,-1.48 -3.77,-3.2 -3.7,-6.08 -0.95,-3.8 -3.28,-3.2 -5.96,-1.28 -0.41,0.2 -0.81,0.4 -1.22,0.6z m19.94,10.03c3.58,0.95 7.91,2.99 11.25,0.47 -1.05,-1.63 -5.06,-0.59 -7.1,-0.86 -1.44,0.01 -3.54,-1.63 -4.15,0.39z m12.13,4.38c2.33,2.45 3.64,6.83 7.24,7.4 2.36,-0.69 6.84,-0.66 7.32,-3.43 -2.09,-2.51 -5.77,-3.35 -8.88,-4.29 -2.53,-1.2 -4.11,-3.25 -5.68,0.33z m-7.06,1c-0.29,3.69 5.55,3.98 3.67,0.55 -0.27,-1.25 -3.83,-1.74 -3.67,-0.55z m23.66,14.69c0.27,2.45 3.18,3.93 0.47,6.15 -0.65,2.42 -5.54,2.87 -2.52,5.53 2.36,1.46 2.01,4.85 2.92,7.14 -0.72,2.69 -1.43,6.78 1.72,8.06 2.8,2.95 4.5,-1.93 6.19,-3.68 1.27,-1.69 3.85,-4.1 5.94,-2.59 3.04,-0.81 6.3,-2.42 7.78,-5.22 -2.79,-1.31 -4.88,-3.19 -5.57,-6.29 -2.4,-5.33 -8.95,-6.26 -13.58,-8.98 -1.29,-0.52 -2.26,-1.62 -3.34,-0.11z"
                                             stroke="#818181" stroke-width="1" stroke-linecap="round"
@@ -675,7 +664,8 @@
                                             d="m242.72,428.78c4.82,0.63 9.65,1.25 14.47,1.88 0.43,-3.33 0.85,-6.67 1.28,-10 9.7,0.89 19.4,1.86 29.09,2.78 -0.9,-3.14 -1.39,-5.98 2.84,-4.5 18.29,1.28 36.48,3.79 54.81,4.49 2.45,-0.6 7.66,2.13 7.99,-1.01 3.06,-22.93 3.75,-46.09 5.59,-69.14 0.54,-7.79 1.39,-15.56 2.02,-23.34 3.21,0.65 1.17,-4.81 2.07,-6.86 1.79,-4.38 -2.87,-3.37 -5.73,-3.85 -32.35,-3.3 -64.71,-6.59 -97.06,-9.89 -5.79,39.81 -11.58,79.63 -17.38,119.44z"
                                             stroke="#818181" stroke-width="1" stroke-linecap="round"
                                             stroke-linejoin="round" stroke-opacity="0.25" fill="#f4f3f0"
-                                            original="#f4f3f0" id="jqvmap1_nm" class="jqvmap-region"></path>
+                                            original="#f4f3f0" id="jqvmap1_nm" class="jqvmap-region" fill-opacity="1">
+                                        </path>
                                         <path
                                             d="m380.53,320.34c25.06,1.17 50.11,2.71 75.19,3.35 17.22,0.07 34.44,0.63 51.66,0.18 -0.25,-12.69 0.23,-25.42 -0.47,-38.08 -0.61,-2.83 -0.17,-6.27 -1.38,-8.74 -3.04,-2.03 -6.02,-5.19 -6.68,-8.77 -0.43,-2.51 4.3,-4.59 1.29,-6.64 -3.02,0.54 -4.05,-3.34 -7.17,-2.43 -36.21,-0.82 -72.43,-1.33 -108.63,-2.5 -1.27,21.21 -2.54,42.42 -3.81,63.63z"
                                             stroke="#818181" stroke-width="1" stroke-linecap="round"
@@ -756,19 +746,19 @@
                         <div class="card-footer bg-transparent">
                             <div class="row">
                                 <div class="col-4 text-center">
-                                    <div id="sparkline-1"><canvas width="100" height="62"
+                                    <div id="sparkline-1"><canvas width="107" height="66"
                                             style="width: 80px; height: 50px;"></canvas></div>
                                     <div class="text-white">Visitors</div>
                                 </div>
                                 <!-- ./col -->
                                 <div class="col-4 text-center">
-                                    <div id="sparkline-2"><canvas width="100" height="62"
+                                    <div id="sparkline-2"><canvas width="107" height="66"
                                             style="width: 80px; height: 50px;"></canvas></div>
                                     <div class="text-white">Online</div>
                                 </div>
                                 <!-- ./col -->
                                 <div class="col-4 text-center">
-                                    <div id="sparkline-3"><canvas width="100" height="62"
+                                    <div id="sparkline-3"><canvas width="107" height="66"
                                             style="width: 80px; height: 50px;"></canvas></div>
                                     <div class="text-white">Sales</div>
                                 </div>
@@ -778,390 +768,11 @@
                         </div>
                     </div>
                     <!-- /.card -->
-
-                    <!-- solid sales graph -->
-                    <div class="card bg-gradient-info">
-                        <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
-                            <h3 class="card-title">
-                                <i class="fas fa-th mr-1"></i>
-                                Sales Graph
-                            </h3>
-
-                            <div class="card-tools">
-                                <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="chartjs-size-monitor">
-                                <div class="chartjs-size-monitor-expand">
-                                    <div class=""></div>
-                                </div>
-                                <div class="chartjs-size-monitor-shrink">
-                                    <div class=""></div>
-                                </div>
-                            </div>
-                            <canvas class="chart chartjs-render-monitor" id="line-chart"
-                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 863px;"
-                                width="1078" height="312"></canvas>
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer bg-transparent">
-                            <div class="row">
-                                <div class="col-4 text-center">
-                                    <div style="display:inline;width:60px;height:60px;"><canvas width="75"
-                                            height="75" style="width: 60px; height: 60px;"></canvas><input
-                                            type="text" class="knob" data-readonly="true" value="20"
-                                            data-width="60" data-height="60" data-fgcolor="#39CCCC" readonly="readonly"
-                                            style="width: 34px; height: 20px; position: absolute; vertical-align: middle; margin-top: 20px; margin-left: -47px; border: 0px; background: none; font: bold 12px Arial; text-align: center; color: rgb(57, 204, 204); padding: 0px; appearance: none;">
-                                    </div>
-
-                                    <div class="text-white">Mail-Orders</div>
-                                </div>
-                                <!-- ./col -->
-                                <div class="col-4 text-center">
-                                    <div style="display:inline;width:60px;height:60px;"><canvas width="75"
-                                            height="75" style="width: 60px; height: 60px;"></canvas><input
-                                            type="text" class="knob" data-readonly="true" value="50"
-                                            data-width="60" data-height="60" data-fgcolor="#39CCCC" readonly="readonly"
-                                            style="width: 34px; height: 20px; position: absolute; vertical-align: middle; margin-top: 20px; margin-left: -47px; border: 0px; background: none; font: bold 12px Arial; text-align: center; color: rgb(57, 204, 204); padding: 0px; appearance: none;">
-                                    </div>
-
-                                    <div class="text-white">Online</div>
-                                </div>
-                                <!-- ./col -->
-                                <div class="col-4 text-center">
-                                    <div style="display:inline;width:60px;height:60px;"><canvas width="75"
-                                            height="75" style="width: 60px; height: 60px;"></canvas><input
-                                            type="text" class="knob" data-readonly="true" value="30"
-                                            data-width="60" data-height="60" data-fgcolor="#39CCCC" readonly="readonly"
-                                            style="width: 34px; height: 20px; position: absolute; vertical-align: middle; margin-top: 20px; margin-left: -47px; border: 0px; background: none; font: bold 12px Arial; text-align: center; color: rgb(57, 204, 204); padding: 0px; appearance: none;">
-                                    </div>
-
-                                    <div class="text-white">In-Store</div>
-                                </div>
-                                <!-- ./col -->
-                            </div>
-                            <!-- /.row -->
-                        </div>
-                        <!-- /.card-footer -->
-                    </div>
-                    <!-- /.card -->
-
-                    <!-- Calendar -->
-                    <div class="card bg-gradient-success">
-                        <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
-
-                            <h3 class="card-title">
-                                <i class="far fa-calendar-alt"></i>
-                                Calendar
-                            </h3>
-                            <!-- tools card -->
-                            <div class="card-tools">
-                                <!-- button with a dropdown -->
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-success btn-sm dropdown-toggle"
-                                        data-toggle="dropdown" data-offset="-52">
-                                        <i class="fas fa-bars"></i>
-                                    </button>
-                                    <div class="dropdown-menu" role="menu">
-                                        <a href="#" class="dropdown-item">Add new event</a>
-                                        <a href="#" class="dropdown-item">Clear events</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a href="#" class="dropdown-item">View calendar</a>
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <!-- /. tools -->
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body pt-0">
-                            <!--The calendar -->
-                            <div id="calendar" style="width: 100%">
-                                <div class="bootstrap-datetimepicker-widget usetwentyfour">
-                                    <ul class="list-unstyled">
-                                        <li class="show">
-                                            <div class="datepicker">
-                                                <div class="datepicker-days" style="">
-                                                    <table class="table table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="prev" data-action="previous"><span
-                                                                        class="fa fa-chevron-left"
-                                                                        title="Previous Month"></span></th>
-                                                                <th class="picker-switch" data-action="pickerSwitch"
-                                                                    colspan="5" title="Select Month">July 2023</th>
-                                                                <th class="next" data-action="next"><span
-                                                                        class="fa fa-chevron-right"
-                                                                        title="Next Month"></span></th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="dow">Su</th>
-                                                                <th class="dow">Mo</th>
-                                                                <th class="dow">Tu</th>
-                                                                <th class="dow">We</th>
-                                                                <th class="dow">Th</th>
-                                                                <th class="dow">Fr</th>
-                                                                <th class="dow">Sa</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td data-action="selectDay" data-day="06/25/2023"
-                                                                    class="day old weekend">25</td>
-                                                                <td data-action="selectDay" data-day="06/26/2023"
-                                                                    class="day old">26</td>
-                                                                <td data-action="selectDay" data-day="06/27/2023"
-                                                                    class="day old">27</td>
-                                                                <td data-action="selectDay" data-day="06/28/2023"
-                                                                    class="day old">28</td>
-                                                                <td data-action="selectDay" data-day="06/29/2023"
-                                                                    class="day old">29</td>
-                                                                <td data-action="selectDay" data-day="06/30/2023"
-                                                                    class="day old">30</td>
-                                                                <td data-action="selectDay" data-day="07/01/2023"
-                                                                    class="day weekend">1</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td data-action="selectDay" data-day="07/02/2023"
-                                                                    class="day weekend">2</td>
-                                                                <td data-action="selectDay" data-day="07/03/2023"
-                                                                    class="day">3</td>
-                                                                <td data-action="selectDay" data-day="07/04/2023"
-                                                                    class="day">4</td>
-                                                                <td data-action="selectDay" data-day="07/05/2023"
-                                                                    class="day">5</td>
-                                                                <td data-action="selectDay" data-day="07/06/2023"
-                                                                    class="day">6</td>
-                                                                <td data-action="selectDay" data-day="07/07/2023"
-                                                                    class="day">7</td>
-                                                                <td data-action="selectDay" data-day="07/08/2023"
-                                                                    class="day weekend">8</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td data-action="selectDay" data-day="07/09/2023"
-                                                                    class="day weekend">9</td>
-                                                                <td data-action="selectDay" data-day="07/10/2023"
-                                                                    class="day">10</td>
-                                                                <td data-action="selectDay" data-day="07/11/2023"
-                                                                    class="day">11</td>
-                                                                <td data-action="selectDay" data-day="07/12/2023"
-                                                                    class="day">12</td>
-                                                                <td data-action="selectDay" data-day="07/13/2023"
-                                                                    class="day">13</td>
-                                                                <td data-action="selectDay" data-day="07/14/2023"
-                                                                    class="day">14</td>
-                                                                <td data-action="selectDay" data-day="07/15/2023"
-                                                                    class="day weekend">15</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td data-action="selectDay" data-day="07/16/2023"
-                                                                    class="day weekend">16</td>
-                                                                <td data-action="selectDay" data-day="07/17/2023"
-                                                                    class="day">17</td>
-                                                                <td data-action="selectDay" data-day="07/18/2023"
-                                                                    class="day">18</td>
-                                                                <td data-action="selectDay" data-day="07/19/2023"
-                                                                    class="day">19</td>
-                                                                <td data-action="selectDay" data-day="07/20/2023"
-                                                                    class="day">20</td>
-                                                                <td data-action="selectDay" data-day="07/21/2023"
-                                                                    class="day">21</td>
-                                                                <td data-action="selectDay" data-day="07/22/2023"
-                                                                    class="day weekend">22</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td data-action="selectDay" data-day="07/23/2023"
-                                                                    class="day weekend">23</td>
-                                                                <td data-action="selectDay" data-day="07/24/2023"
-                                                                    class="day">24</td>
-                                                                <td data-action="selectDay" data-day="07/25/2023"
-                                                                    class="day">25</td>
-                                                                <td data-action="selectDay" data-day="07/26/2023"
-                                                                    class="day">26</td>
-                                                                <td data-action="selectDay" data-day="07/27/2023"
-                                                                    class="day active today">27</td>
-                                                                <td data-action="selectDay" data-day="07/28/2023"
-                                                                    class="day">28</td>
-                                                                <td data-action="selectDay" data-day="07/29/2023"
-                                                                    class="day weekend">29</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td data-action="selectDay" data-day="07/30/2023"
-                                                                    class="day weekend">30</td>
-                                                                <td data-action="selectDay" data-day="07/31/2023"
-                                                                    class="day">31</td>
-                                                                <td data-action="selectDay" data-day="08/01/2023"
-                                                                    class="day new">1</td>
-                                                                <td data-action="selectDay" data-day="08/02/2023"
-                                                                    class="day new">2</td>
-                                                                <td data-action="selectDay" data-day="08/03/2023"
-                                                                    class="day new">3</td>
-                                                                <td data-action="selectDay" data-day="08/04/2023"
-                                                                    class="day new">4</td>
-                                                                <td data-action="selectDay" data-day="08/05/2023"
-                                                                    class="day new weekend">5</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="datepicker-months" style="display: none;">
-                                                    <table class="table-condensed">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="prev" data-action="previous"><span
-                                                                        class="fa fa-chevron-left"
-                                                                        title="Previous Year"></span></th>
-                                                                <th class="picker-switch" data-action="pickerSwitch"
-                                                                    colspan="5" title="Select Year">2023</th>
-                                                                <th class="next" data-action="next"><span
-                                                                        class="fa fa-chevron-right"
-                                                                        title="Next Year"></span></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td colspan="7"><span data-action="selectMonth"
-                                                                        class="month">Jan</span><span
-                                                                        data-action="selectMonth"
-                                                                        class="month">Feb</span><span
-                                                                        data-action="selectMonth"
-                                                                        class="month">Mar</span><span
-                                                                        data-action="selectMonth"
-                                                                        class="month">Apr</span><span
-                                                                        data-action="selectMonth"
-                                                                        class="month">May</span><span
-                                                                        data-action="selectMonth"
-                                                                        class="month">Jun</span><span
-                                                                        data-action="selectMonth"
-                                                                        class="month active">Jul</span><span
-                                                                        data-action="selectMonth"
-                                                                        class="month">Aug</span><span
-                                                                        data-action="selectMonth"
-                                                                        class="month">Sep</span><span
-                                                                        data-action="selectMonth"
-                                                                        class="month">Oct</span><span
-                                                                        data-action="selectMonth"
-                                                                        class="month">Nov</span><span
-                                                                        data-action="selectMonth"
-                                                                        class="month">Dec</span></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="datepicker-years" style="display: none;">
-                                                    <table class="table-condensed">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="prev" data-action="previous"><span
-                                                                        class="fa fa-chevron-left"
-                                                                        title="Previous Decade"></span></th>
-                                                                <th class="picker-switch" data-action="pickerSwitch"
-                                                                    colspan="5" title="Select Decade">2020-2029</th>
-                                                                <th class="next" data-action="next"><span
-                                                                        class="fa fa-chevron-right"
-                                                                        title="Next Decade"></span></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td colspan="7"><span data-action="selectYear"
-                                                                        class="year old">2019</span><span
-                                                                        data-action="selectYear"
-                                                                        class="year">2020</span><span
-                                                                        data-action="selectYear"
-                                                                        class="year">2021</span><span
-                                                                        data-action="selectYear"
-                                                                        class="year">2022</span><span
-                                                                        data-action="selectYear"
-                                                                        class="year active">2023</span><span
-                                                                        data-action="selectYear"
-                                                                        class="year">2024</span><span
-                                                                        data-action="selectYear"
-                                                                        class="year">2025</span><span
-                                                                        data-action="selectYear"
-                                                                        class="year">2026</span><span
-                                                                        data-action="selectYear"
-                                                                        class="year">2027</span><span
-                                                                        data-action="selectYear"
-                                                                        class="year">2028</span><span
-                                                                        data-action="selectYear"
-                                                                        class="year">2029</span><span
-                                                                        data-action="selectYear"
-                                                                        class="year old">2030</span></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="datepicker-decades" style="display: none;">
-                                                    <table class="table-condensed">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="prev" data-action="previous"><span
-                                                                        class="fa fa-chevron-left"
-                                                                        title="Previous Century"></span></th>
-                                                                <th class="picker-switch" data-action="pickerSwitch"
-                                                                    colspan="5">2000-2090</th>
-                                                                <th class="next" data-action="next"><span
-                                                                        class="fa fa-chevron-right"
-                                                                        title="Next Century"></span></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td colspan="7"><span data-action="selectDecade"
-                                                                        class="decade old"
-                                                                        data-selection="2006">1990</span><span
-                                                                        data-action="selectDecade" class="decade"
-                                                                        data-selection="2006">2000</span><span
-                                                                        data-action="selectDecade" class="decade"
-                                                                        data-selection="2016">2010</span><span
-                                                                        data-action="selectDecade" class="decade active"
-                                                                        data-selection="2026">2020</span><span
-                                                                        data-action="selectDecade" class="decade"
-                                                                        data-selection="2036">2030</span><span
-                                                                        data-action="selectDecade" class="decade"
-                                                                        data-selection="2046">2040</span><span
-                                                                        data-action="selectDecade" class="decade"
-                                                                        data-selection="2056">2050</span><span
-                                                                        data-action="selectDecade" class="decade"
-                                                                        data-selection="2066">2060</span><span
-                                                                        data-action="selectDecade" class="decade"
-                                                                        data-selection="2076">2070</span><span
-                                                                        data-action="selectDecade" class="decade"
-                                                                        data-selection="2086">2080</span><span
-                                                                        data-action="selectDecade" class="decade"
-                                                                        data-selection="2096">2090</span><span
-                                                                        data-action="selectDecade" class="decade old"
-                                                                        data-selection="2106">2100</span></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="picker-switch accordion-toggle"></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
                 </section>
                 <!-- right col -->
             </div>
             <!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->
         </div><!-- /.container-fluid -->
     </section>
 @endsection

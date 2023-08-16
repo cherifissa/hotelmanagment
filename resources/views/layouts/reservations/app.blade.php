@@ -5,20 +5,21 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <title>@yield('title')</title>
     <meta name="keywords"
         content="réservations d'hôtel, réservation en ligne, réservation d'hébergement, voyage, hospitalité">
     <meta name="description"
         content="Profitez d'un service pratique et sans tracas pour vos réservations d'hôtel grâce à notre service de réservation en ligne. Parcourez et réservez un large choix d'hébergements pour répondre à vos besoins de voyage. Découvrez une hospitalité exceptionnelle et rendez votre expérience de voyage inoubliable.">
     <meta name="author" content="cherifissa36">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
     <!-- fevicon -->
     <link rel="icon" href="{{ asset('images/logo.png') }}" />
     <link rel="stylesheet" href="{{ asset('css/jquery.mCustomScrollbar.min.css') }}">
@@ -201,11 +202,12 @@
     </footer>
     <!-- end footer -->
     <!-- Javascript files-->
+    <script src="{{ asset('js/jquery-3.0.0.min.js') }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.js') }}"></script>
-
     <script src="{{ asset('js/sweetalert.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
     <!-- sidebar -->
     <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>

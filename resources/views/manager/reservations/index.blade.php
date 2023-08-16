@@ -65,6 +65,19 @@
             })
         </script>
     @endif
+    <!-- SidebarSearch Form -->
+    <div class="d-flex justify-content-end my-2 mx-1">
+        <div class="col-md-5">
+            <div class="input-group">
+                <input class="form-control" placeholder="Rechercher">
+                <div class="input-group-append">
+                    <button class="btn btn-info ">
+                        <i class="fas fa-search fa-fw"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="card">
         <div class="card-header d-flex p-0">
             <h3 class="card-title p-3">Liste des reservations</h3>
