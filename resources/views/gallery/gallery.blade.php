@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="title">
-                        <h2>gallery</h2>
+                        <h2>GALERIE</h2>
                     </div>
                 </div>
             </div>

@@ -13,8 +13,14 @@ class FactureController extends Controller
     {
         $currentDate = Carbon::now();
 
+
         $date = "le " . $currentDate->format('d/m/Y');
         $client = User::find($reservation->client_id);
+        $services1 = Service::where('reservation_id', $reservation->numero)
+            ->where(function ($query) {
+                $query->where('type_payement', '<>', 'reservation');
+            })->get();
+
         $services = Service::where('reservation_id', $reservation->numero)
             ->get()
             ->groupBy('type_service')
@@ -29,9 +35,12 @@ class FactureController extends Controller
             ->values()
             ->toArray();
 
+        $totalPrixservice = $services1->sum('prix');
+        //dd($reservation);
+
         $totalPrixFromServices = collect($services)->pluck('totalPrice')->sum();
         $totalprix = $reservation->prix + $totalPrixFromServices;
-        return view('manager.facture.facture', compact('client', 'services', 'reservation', 'date', 'totalprix', 'totalPrixFromServices'));
+        return view('manager.facture.facture', compact('client', 'services', 'reservation', 'date', 'totalprix', 'totalPrixFromServices', 'totalPrixservice'));
     }
 
     private function getServiceTypeName($type)

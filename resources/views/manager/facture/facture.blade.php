@@ -3,13 +3,22 @@
 
 <head>
     <meta charset="utf-8">
-    <title>HTML TO PDF</title>
+    <title>Facture</title>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link href="{{ asset('css/pdfstyle.css') }}" rel="stylesheet">
 </head>
 
 <body>
+
+    <div class="row justify-content-around mb-3">
+        <div class="col-5">
+            <a class="btn btn-danger" href="{{ route('reservations.index') }}">Retourner</a>
+        </div>
+        <div class="col-4">
+            <a href="javascript:void(0)" class="btn-download btn btn-warning">Imprimer la facture</a>
+        </div>
+    </div>
 
     <div id="invoice">
         <header>
@@ -27,7 +36,7 @@
 
             <address class="norm">
                 <h4>{{ $client->nom }}</h4>
-                <p> {{ $client->email }} <br>
+                <p> {{ $client->email }} <br></p>
                 <p>{!! nl2br(e($client->adresse)) !!}</p>
                 <p> Phone: {{ $client->tel }}</p>
             </address>
@@ -40,11 +49,11 @@
                         </span></td>
                 </tr>
                 <tr>
-                    <th><span>Date emmission</span></th>
+                    <th><span>Date d'émmission</span></th>
                     <td><span>{{ $date }}</span></td>
                 </tr>
                 <tr>
-                    <th><span>Date d'arrivé</span></th>
+                    <th><span>Date d'arrivée</span></th>
                     <td><span>le
                             {{ \Carbon\Carbon::createFromFormat('Y-m-d', $reservation->date_arrive)->format('d/m/Y') }}
                         </span></td>
@@ -55,16 +64,25 @@
                     <tr>
                         <th><span>N°</span></th>
                         <th><span>Description</span></th>
-                        <th><span>Qté</span></th>
+                        <th><span>Qté/Jrs</span></th>
                         <th><span>Taux par quantité</span></th>
                         <th><span>Prix total</span></th>
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
+                        <td>1.</td>
+                        <td>N°
+                            <strong>{{ $reservation->numero . ', chambre : ' . $reservation->chambre->type }}</strong>
+                        </td>
+                        <td>{{ $reservation->nbr_jour }} jour(s)</td>
+                        <td>{{ $reservation->prix / $reservation->nbr_jour }} FCFA</td>
+                        <td>{{ $reservation->prix }} FCFA</td>
+                    </tr>
                     @foreach ($services as $serviceGroup)
                         <tr>
                             <span>
-                                <td>{{ $loop->iteration }}.</td>
+                                <td>{{ $loop->iteration + 1 }}.</td>
                                 <td><strong>{{ $serviceGroup['name'] }}</strong></td>
                                 <td><span>{{ $serviceGroup['quantity'] }}</span></td>
                                 <td><span>{{ $serviceGroup['totalPrice'] / $serviceGroup['quantity'] }} FCFA</span>
@@ -93,8 +111,12 @@
                     <td><span><b>{{ $reservation->prix }} FCFA</b></span></td>
                 </tr>
                 <tr>
-                    <th><span>Total</span></th>
-                    <td><span><b>{{ $totalprix }} FCFA</b></span></td>
+                    <th><span>Payé</span></th>
+                    <td><span><b>{{ $totalPrixservice }} FCFA</b></span></td>
+                </tr>
+                <tr>
+                    <th><span>Total à payer</span></th>
+                    <td><span><b>{{ $totalprix - $totalPrixservice }} FCFA</b></span></td>
                 </tr>
             </table>
         </article>
@@ -102,18 +124,6 @@
             <h1><span>Notes complémentaires</span></h1>
             Veuillez régler cette facture à la reception.
         </aside>
-    </div>
-
-    <div class="row justify-content-md-center">
-        <div class="col col-lg-2">
-            <a class="btn btn-danger" href="{{ route('reservations.index') }}">Retourner </a>
-        </div>
-
-        <div class="col-md-4">
-        </div>
-        <div class="col col-lg-5">
-            <a href="javascript:void(0)" class="btn-download btn btn-warning">Imprimer la facture</a>
-        </div>
     </div>
 
     <script src="{{ asset('js/jspdf.debug.js') }}"></script>

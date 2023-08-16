@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="title">
-                        <h2>Contact Us</h2>
+                        <h2>Contactez-nous</h2>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                                 @enderror
                             </div>
                             <div class="col-md-12">
-                                <button type="submit" class="send_btn">Send</button>
+                                <button type="submit" class="send_btn">Envoyer</button>
                             </div>
                         </div>
                     </form>
@@ -77,7 +77,8 @@
                     <div class="map_main">
                         <div class="map-responsive">
                             <iframe
-                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&amp;q=Eiffel+Tower+Paris+France"
+                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&amp;q=ESGIS+Kodjoviakope
+                                +Lome+Togo"
                                 width="600" height="400" frameborder="0" style="border:0; width: 100%;"
                                 allowfullscreen=""></iframe>
                         </div>
