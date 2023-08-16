@@ -11,32 +11,29 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $user = User::first();
+
+        $user = User::find(session('admin'));
+        $user =  $user[0];
+        //dd($user->id);
         return view('manager.profile', compact('user'));
     }
-    public function update(Request $request,  $userid)
+    public function update(Request $request,  User $user)
     {
-        $user = User::find($userid);
-        $request->validate([
+
+        $validateData = $request->validate([
             'nom' => 'required|string|max:255',
             'adresse' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $userid,
-            'telephone' => 'required|numeric',
-        ]);
-        $user->update([
-            'nom' => $request->input('nom'),
-            'adresse' => $request->input('adresse'),
-            'email' => $request->input('email'),
-            'telephone' => $request->input('telephone'),
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'tel' => 'required',
         ]);
 
-        return redirect()->route('profile.index')->with('success', 'update.');
+        // Use the update method directly on the model
+        $user->update($validateData);
+        return redirect()->route('profile.index')->with('success', 'update');
     }
 
-    public function changePassword(Request $request, $userid)
+    public function changePassword(Request $request,  User $user)
     {
-        $user = User::find($userid);
-
         $request->validate([
             'oldpassword' => 'required|string|min:8',
             'password' => 'required|string|min:8|same:password_confirmation',
@@ -48,9 +45,11 @@ class ProfileController extends Controller
                 $user->password = Hash::make($request->input('password'));
                 $user->save();
                 return redirect()->route('profile.index')->with('successpassword', 'updated');
+            } else {
+                return back()->withErrors(['oldpassword' => 'L\'ancien mot de passe est incorrect.']);
             }
         } else {
-            return back()->withErrors(['oldpassword' => 'L\'ancien mot de passe est incorrect.']);
+            return back();
         }
     }
 }

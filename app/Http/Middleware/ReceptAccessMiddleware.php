@@ -15,9 +15,8 @@ class ReceptAccessMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $userData = session('user');
+        $userData = session('recept');
         $isadmin = $userData['isadmin'] ?? null;
-
         if ($isadmin === 'recept') {
             return $next($request);
         }

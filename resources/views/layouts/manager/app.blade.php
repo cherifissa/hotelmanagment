@@ -37,7 +37,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('admin') ? 'active' : '' }}" aria-current="page" href="/admin">
+                    <a class="nav-link {{ request()->is('admin', 'recept') ? 'active' : '' }}" aria-current="page"
+                        href="{{ request()->is('admin*') ? '/admin' : '/recept' }}">
                         <div class="d-flex align-items-center"> <i class="nav-icon fas fa-home"></i>
                             <p class="ml-2 mt-3">Accueil</p>
                         </div>
@@ -66,13 +67,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
                     </a>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link {{ request()->is('admin/admins*') ? 'active' : '' }} " href="/admin/admins">
-                        <div class="d-flex align-items-center"><i class="nav-icon fas fa-users"></i>
-                            <p class="ml-2 mt-3">Utilisateurs</p>
-                        </div>
-                    </a>
-                </li>
+                @if (session()->has('admin'))
+                    <li class="nav-item d-none d-sm-inline-block">
+                        <a class="nav-link {{ request()->is('admin/admins*') ? 'active' : '' }} " href="/admin/admins">
+                            <div class="d-flex align-items-center"><i class="nav-icon fas fa-users"></i>
+                                <p class="ml-2 mt-3">Utilisateurs</p>
+                            </div>
+                        </a>
+                    </li>
+                @endif
                 <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link {{ request()->is('admin/demandes') ? 'active' : '' }} " href="/admin/demandes">
                         <div class="d-flex align-items-center">
@@ -89,15 +92,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
                     </a>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link {{ request()->is('admin/statistiques') ? 'active' : '' }} "
-                        href="/admin/statistiques">
-                        <div class="d-flex align-items-center">
-                            <i class="nav-icon fas fa-chart-bar"></i>
-                            <p class="ml-2 mt-3">Statistiques</p>
-                        </div>
-                    </a>
-                </li>
+                @if (session()->has('admin'))
+                    <li class="nav-item d-none d-sm-inline-block">
+                        <a class="nav-link {{ request()->is('admin/statistiques') ? 'active' : '' }} "
+                            href="/admin/statistiques">
+                            <div class="d-flex align-items-center">
+                                <i class="nav-icon fas fa-chart-bar"></i>
+                                <p class="ml-2 mt-3">Statistiques</p>
+                            </div>
+                        </a>
+                    </li>
+                @endif
 
             </ul>
 
@@ -111,10 +116,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </li>
 
                 <li class="nav-item ">
-                    <form action="{{ route('disconnect') }}" method="post">
-                        @csrf
-                        <button type="submit" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i></button>
-                    </form>
+                    @if (session()->has('admin'))
+                        <form action="{{ route('disconnect', session('admin')) }}" method="post">@csrf
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i></button>
+                        </form>
+                    @else
+                        <form action="{{ route('disconnect', session('recept')) }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i></button>
+                        </form>
+                    @endif
                 </li>
             </ul>
         </nav>
@@ -123,7 +134,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="{{ route('profile.index') }}" class="brand-link">
+            <a href="{{ route('manageindex') }}" class="brand-link">
                 <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">Dashboard</span>
@@ -150,8 +161,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <a href="#"
-                                class="nav-link  {{ request()->is('admin/chambres*') ? 'active' : '' }} ">
+                            <a href="#" class="nav-link  {{ request()->is('*/chambres*') ? 'active' : '' }} ">
                                 <i class="nav-icon fas fa-house-user"></i>
                                 <p>
                                     Chambres
@@ -160,16 +170,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                             <ul class="nav nav-treeview" style="display: none;">
                                 <li class="nav-item">
-                                    <a href="{{ route('chambres.index') }}" class="nav-link ">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Liste des chambres</p>
-                                    </a>
+                                    @if (session()->has('recept'))
+                                        <a href="{{ route('chambrerecept') }}" class="nav-link ">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Liste des chambres</p>
+                                        </a>
+                                    @else
+                                        <a href="{{ route('chambres.index') }}" class="nav-link ">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Liste des chambres</p>
+                                        </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('chambres.create') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Crée une chambre</p>
                                     </a>
+                                    @endif
                                 </li>
                             </ul>
                         </li>
@@ -222,33 +239,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                             </ul>
                         </li>
+                        @if (session()->has('admin'))
+                            <li class="nav-item">
+                                <a href="#"
+                                    class="nav-link  {{ request()->is('admin/admins*') ? 'active' : '' }} ">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        Utilisateurs
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview" style="display: none;">
+                                    <li class="nav-item">
+                                        <a href="{{ route('admins.index') }}" class="nav-link  ">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Liste des utilisateur</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('users.create') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Crée un utilisateur</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
                         <li class="nav-item">
-                            <a href="#"
-                                class="nav-link  {{ request()->is('admin/admins*') ? 'active' : '' }} ">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    Utilisateurs
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview" style="display: none;">
-                                <li class="nav-item">
-                                    <a href="{{ route('admins.index') }}" class="nav-link  ">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Liste des utilisateur</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('users.create') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Crée un utilisateur</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#"
-                                class="nav-link  {{ request()->is('admin/demandes') ? 'active' : '' }} ">
+                            <a href="#" class="nav-link  {{ request()->is('*/demandes') ? 'active' : '' }} ">
                                 <i class="nav-icon fa fa-bookmark"></i>
                                 <p>
                                     Demandes de réservation
@@ -265,8 +283,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#"
-                                class="nav-link  {{ request()->is('admin/messages*') ? 'active' : '' }} ">
+                            <a href="#" class="nav-link  {{ request()->is('*/messages*') ? 'active' : '' }} ">
                                 <i class="nav-icon fa fa-envelope"></i>
                                 <p>
                                     Messages
@@ -283,16 +300,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </ul>
                         </li>
                     </ul>
-                    <ul class="nav nav-bottom nav-sidebar flex-column" data-widget="treeview" role="menu">
+                    @if (session()->has('admin'))
+                        <ul class="nav nav-bottom nav-sidebar flex-column" data-widget="treeview" role="menu">
 
-                        <li class="nav-item mt-auto">
-                            <a href="{{ url('admin/statistiques') }}"
-                                class="nav-link  {{ request()->is('admin/statistiques*') ? 'active' : '' }} ">
-                                <i class="nav-icon fas fa-chart-bar"></i>
-                                <p>Statistiques</p>
-                            </a>
-                        </li>
-                    </ul>
+                            <li class="nav-item mt-auto">
+                                <a href="{{ url('admin/statistiques') }}"
+                                    class="nav-link  {{ request()->is('admin/statistiques*') ? 'active' : '' }} ">
+                                    <i class="nav-icon fas fa-chart-bar"></i>
+                                    <p>Statistiques</p>
+                                </a>
+                            </li>
+                        </ul>
+                    @endif
                     <ul class="nav nav-bottom nav-sidebar flex-column" data-widget="treeview" role="menu">
 
                         <li class="nav-item mt-auto">

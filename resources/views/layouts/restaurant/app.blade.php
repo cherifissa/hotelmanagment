@@ -81,7 +81,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </li>
 
                 <li class="nav-item ">
-                    <form action="{{ route('disconnect') }}" method="post">
+                    <form action="{{ route('disconnect', session('server')) }}" method="post">
                         @csrf
                         <button type="submit" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i></button>
                     </form>

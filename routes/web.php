@@ -16,7 +16,10 @@ use App\Http\Controllers\DemandeReservationController;
 use App\Http\Controllers\FactureController;
 use App\Http\Controllers\StatistiqueController;
 use App\Http\Middleware\AdminAccessMiddleware;
-
+use App\Http\Middleware\ReceptAccessMiddleware;
+use App\Http\Middleware\RestaurantAccessMiddleware;
+use FontLib\Table\Type\name;
+use PhpParser\Builder\Function_;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +34,7 @@ use App\Http\Middleware\AdminAccessMiddleware;
 //route commun
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('loginaction');
-Route::post('/disconnect', [LoginController::class, 'disconnect'])->name('disconnect');
+Route::post('/disconnect/{userid}', [LoginController::class, 'disconnect'])->name('disconnect');
 
 //route client
 Route::prefix('/')->group(function () {
@@ -59,29 +62,40 @@ Route::prefix('/')->group(function () {
         return view('blog.blog');
     });
 });
-
-//route admin
-//middleware([AdminAccessMiddleware::class])->
-Route::prefix('admin')->group(function () {
+$adminAndReceptRoutes = function () {
     Route::get('/', function () {
         return view('manager.index');
-    });
-    Route::get('statistiques', [StatistiqueController::class, 'index'])->name('statistiques');
+    })->name('manageindex');
     Route::get('facture/{reservation}', [FactureController::class, 'index'])->name('facture');
     Route::resource('demandes', DemandeReservationController::class)->except('show');
-    Route::resource('chambres', ChambreController::class)->except('show');
+    Route::get('chambres', [ChambreController::class, 'index'])->name('chambrerecept');
     Route::resource('/messages', MessageController::class)->only('index', 'destroy');
     Route::resource('profile', ProfileController::class)->only('update', 'index');
-    Route::post('changePassword/{gerantid}', [ProfileController::class, 'changePassword'])->name('changePassword');
-    Route::resource('users', Usercontroller::class)->except('show');
-    Route::resource('admins', AdminController::class)->only('index');
+    Route::post('changePassword/{id}', [ProfileController::class, 'changePassword'])->name('changePassword');
     Route::resource('clients', ClientController::class)->only('index');
+    Route::resource('users', Usercontroller::class)->except('show');
     Route::resource('commentaires', CommentaireController::class)->only('index', 'destroy');
     Route::resource('reservations', ReservationController::class)->except('show');
-})->name('adminindex');
+};
 
-//restaurant
-Route::prefix('restaurant')->group(function () {
+$adminRoutes = function () {
+    Route::resource('admins', AdminController::class)->only('index');
+    Route::get('statistiques', [StatistiqueController::class, 'index'])->name('statistiques');
+    Route::resource('chambres', ChambreController::class)->except('show');
+};
+
+//route admin
+Route::prefix('admin')->middleware([AdminAccessMiddleware::class])->group($adminAndReceptRoutes, $adminRoutes);
+Route::prefix('admin')->middleware([AdminAccessMiddleware::class])->group($adminRoutes);
+
+//route recept
+Route::prefix('recept')->middleware([ReceptAccessMiddleware::class])->group($adminAndReceptRoutes);
+
+
+
+//restaurantr
+//middleware([RestaurantAccessMiddleware::class])->
+Route::prefix('restaurant')->middleware([RestaurantAccessMiddleware::class])->group(function () {
     Route::get('/', function () {
         return view('manager.restaurants.index');
     });

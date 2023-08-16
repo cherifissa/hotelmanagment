@@ -57,8 +57,7 @@
                                     alt="User profile picture">
                             </div>
 
-                            <form class="form-horizontal" method="POST"
-                                action="{{ route('profile.update', $gerant->id) }}">
+                            <form class="form-horizontal" method="POST" action="{{ route('profile.update', $user->id) }}">
                                 @csrf
                                 @method('PUT')
 
@@ -66,7 +65,7 @@
                                     <label for="inputName" class="col-sm-2 col-form-label">Nom</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="inputName" name="nom"
-                                            value="{{ $gerant->nom }}" placeholder="Nom">
+                                            value="{{ $user->nom }}" placeholder="Nom">
                                         @error('nom')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -77,7 +76,7 @@
                                     <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                                     <div class="col-sm-10">
                                         <input type="email" class="form-control" id="inputEmail" name="email"
-                                            value="{{ $gerant->email }}" placeholder="Email">
+                                            value="{{ $user->email }}" placeholder="Email">
                                         @error('email')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -88,7 +87,7 @@
                                     <label for="inputAddress" class="col-sm-2 col-form-label">Adresse</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="inputAddress" name="adresse"
-                                            value="{{ $gerant->adresse }}" placeholder="Adresse">
+                                            value="{{ $user->adresse }}" placeholder="Adresse">
                                         @error('adresse')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -96,11 +95,11 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="inputTelephone" class="col-sm-2 col-form-label">Téléphone</label>
+                                    <label for="inputTel" class="col-sm-2 col-form-label">Téléphone</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputTelephone" name="telephone"
-                                            value="{{ $gerant->telephone }}" placeholder="Téléphone">
-                                        @error('telephone')
+                                        <input type="text" class="form-control" id="inputTel" name="tel"
+                                            value="{{ $user->tel }}" placeholder="Téléphone">
+                                        @error('tel')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -118,16 +117,15 @@
                     <!-- Profile Image -->
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
-                            <form class="form-horizontal" method="POST"
-                                action="{{ route('changePassword', ['gerantid' => $gerant->id]) }}">
+                            <form class="form-horizontal" method="POST" action="{{ route('changePassword', $user) }}">
                                 @csrf
 
                                 <div class="form-group row">
                                     <label for="inputPassword" class="col-sm-2 col-form-label">Ancien mot de
                                         passe</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" name="oldpassword"
-                                            placeholder="Ancien mot de passe">
+                                        <input type="password" class="form-control" value="{{ old('oldpassword') }}"
+                                            name="oldpassword" placeholder="Ancien mot de passe">
                                         @error('oldpassword')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -138,8 +136,8 @@
                                     <label for="inputPassword" class="col-sm-2 col-form-label">Nouveau mot de
                                         passe</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" name="password"
-                                            placeholder="Nouveau mot de passe">
+                                        <input type="password" class="form-control" value="{{ old('password') }}"
+                                            name="password" placeholder="Nouveau mot de passe">
                                         @error('password')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -150,7 +148,8 @@
                                     <label for="inputPasswordConfirmation" class="col-sm-2 col-form-label">Confirmation du
                                         mot de passe</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" name="password_confirmation"
+                                        <input type="password" class="form-control"
+                                            value="{{ old('password_confirmation') }}" name="password_confirmation"
                                             placeholder="Confirmation du mot de passe">
                                     </div>
                                 </div>

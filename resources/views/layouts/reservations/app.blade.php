@@ -102,7 +102,8 @@
                                                         commentaire</a>
                                                 </li>
                                                 <li>
-                                                    <form action="{{ route('disconnect') }}" method="post">
+                                                    <form action="{{ route('disconnect', session('client')) }}"
+                                                        method="post">
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger dropdown-item"><i
                                                                 class="fas fa-sign-out-alt color-danger"></i>

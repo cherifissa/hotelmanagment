@@ -15,13 +15,12 @@ class AdminAccessMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $userData = session('user');
+        $userData = session('admin');
         $isadmin = $userData['isadmin'] ?? null;
 
-        if ($isadmin === 'admin') {
+        if ($isadmin == 'admin') {
             return $next($request);
         }
-
         return redirect('login');
     }
 }

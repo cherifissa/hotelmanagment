@@ -23,18 +23,42 @@ class LoginController extends Controller
         $user = User::where('email', $validatedate['email'])->first();
 
         if ($user && Hash::check($validatedate['password'], $user->password)) {
-            session(['client' => $user]);
+            if ($user->isadmin == 'client') {
+                session(['client' => $user]);
+                return redirect()->intended('/');
+            } elseif ($user->isadmin == 'admin') {
+                session(['admin' => $user]);
+                return redirect()->intended('/admin');
+            } elseif ($user->isadmin == 'recept') {
+                session(['recept' => $user]);
+                return redirect()->intended('/recept');
+            } elseif ($user->isadmin == 'server') {
+                session(['server' => $user]);
+                return redirect()->intended('/restaurant');
+            }
             return redirect()->intended();
         } else {
-            // Invalid email or password, handle the authentication failure
             return back()->withErrors(['erreur' => 'Email ou mot de passe incorrect'])
                 ->withInput(['email']);
         }
     }
-    public function disconnect()
+    public function disconnect($userid)
     {
-        session(['user' => null]);
-        session(['client' => null]);
-        return redirect()->route('accueil');
+        $user = User::find($userid);
+
+        // dd($user->isadmin);
+        if ($user->isadmin == 'client') {
+            session(['client' => null]);
+            return redirect()->intended('/');
+        } elseif ($user->isadmin == 'admin') {
+            session(['admin' => null]);
+            return redirect()->intended('/login');
+        } elseif ($user->isadmin == 'recept') {
+            session(['recept' => null]);
+            return redirect()->intended('/login');
+        } elseif ($user->isadmin == 'server') {
+            session(['server' => null]);
+            return redirect()->intended('/login');
+        }
     }
 }

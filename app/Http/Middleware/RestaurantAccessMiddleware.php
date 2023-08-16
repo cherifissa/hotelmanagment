@@ -15,7 +15,7 @@ class RestaurantAccessMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $userData = session('user');
+        $userData = session('server');
         $isadmin = $userData['isadmin'] ?? null;
 
         if ($isadmin === 'server') {
