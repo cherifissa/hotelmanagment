@@ -55,7 +55,7 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="{{ $prefix . '/clients' }}" class="small-box-footer">Plus d'info <i
+                        <a href="{{ '/' . $prefix . '/clients' }}" class="small-box-footer">Plus d'info <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="{{ $prefix . '/chambres' }}" class="small-box-footer">Plus d'info <i
+                        <a href="{{ '/' . $prefix . '/chambres' }}" class="small-box-footer">Plus d'info <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="{{ $prefix . '/reservations' }}" class="small-box-footer">Plus d'info <i
+                        <a href="{{ '/' . $prefix . '/reservations' }}" class="small-box-footer">Plus d'info <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="{{ $prefix . '/demandes' }}" class="small-box-footer">Plus d'info <i
+                        <a href="{{ '/' . $prefix . '/demandes' }}" class="small-box-footer">Plus d'info <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="{{ $prefix . '/admins' }}" class="small-box-footer">Plus d'info <i
+                        <a href="{{ '/' . $prefix . '/admins' }}" class="small-box-footer">Plus d'info <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="{{ $prefix . '/commentaires' }}" class="small-box-footer">Plus d'info <i
+                        <a href="{{ '/' . $prefix . '/commentaires' }}" class="small-box-footer">Plus d'info <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -147,7 +147,7 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="{{ $prefix . '/services' }}" class="small-box-footer">Plus d'info <i
+                        <a href="{{ '/' . $prefix . '/services' }}" class="small-box-footer">Plus d'info <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -162,7 +162,7 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="{{ $prefix . '/messages' }}" class="small-box-footer">Plus d'info <i
+                        <a href="{{ '/' . $prefix . '/messages' }}" class="small-box-footer">Plus d'info <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
