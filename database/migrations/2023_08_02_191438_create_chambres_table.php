@@ -16,7 +16,7 @@ return new class extends Migration
             $table->enum('type', ['standard', 'privilege', 'suite junior', 'suite famille', 'suite VIP', 'suite presidentielle']);
             $table->integer('prix')->unsigned();
             $table->enum('status', ['occupé', 'libre', 'hors service']);
-            $table->text('description')->nullable(true);
+            $table->text('description', 100)->nullable(true);
             $table->timestamps();
         });
     }

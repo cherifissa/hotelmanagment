@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('demande_reservations', function (Blueprint $table) {
             $table->id();
-            $table->string('email_client');
+            $table->string('email_client', 75);
             $table->date('date_arrive');
             $table->date('date_depart');
             $table->enum('type_chambre', ['standard', 'privilege', 'suite junior', 'suite famille', 'suite VIP', 'suite presidentielle']);
