@@ -89,7 +89,7 @@
 
                         <div class="card-footer">
                             <a class="btn btn-danger " href="#">Annuler</a>
-                            <button type="submit" class="btn btn-info float-right">Ajouter</button>
+                            <button type="submit" class="btn btn-info float-right">Modifier</button>
                         </div>
                     </form>
 

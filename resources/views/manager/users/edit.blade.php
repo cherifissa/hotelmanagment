@@ -55,15 +55,20 @@
                                 <div class="form-group">
                                     <label for="isadmin">Type</label>
                                     <select class="form-control" name="isadmin">
-                                        <option value="">Selectionner le type </option>
-                                        <option value="admin" {{ old('isadmin') === 'admin' ? 'selected' : '' }}>Admin
+                                        <option value="admin"
+                                            {{ old('isadmin', $user->isadmin) === 'admin' ? 'selected' : '' }}>
+                                            Admin
                                         </option>
-                                        <option value="recept" {{ old('isadmin') === 'recept' ? 'selected' : '' }}>Recept
+                                        <option value="recept"
+                                            {{ old('isadmin', $user->isadmin) === 'recept' ? 'selected' : '' }}>
+                                            Réceptionniste
                                         </option>
-                                        <option value="server" {{ old('isadmin') === 'server' ? 'selected' : '' }}>Server
+                                        <option value="server"
+                                            {{ old('isadmin', $user->isadmin) === 'server' ? 'selected' : '' }}>
+                                            Serveur
                                         </option>
-
                                     </select>
+
                                     @error('isadmin')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -73,7 +78,7 @@
 
                         <div class="card-footer">
                             <a class="btn btn-danger " href="#">Annuler</a>
-                            <button type="submit" class="btn btn-info float-right">Ajouter</button>
+                            <button type="submit" class="btn btn-info float-right">Modifier</button>
                         </div>
 
                 </div>

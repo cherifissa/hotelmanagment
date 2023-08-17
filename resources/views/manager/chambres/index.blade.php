@@ -65,15 +65,29 @@
             })
         </script>
     @endif
+
+    @php
+        $url = Route::current()->uri;
+        $segments = explode('/', $url);
+        $firstSegment = $segments[0];
+        
+        if ($firstSegment == 'admin') {
+            $prefix = 'admin';
+        } else {
+            $prefix = 'recept';
+        }
+    @endphp
     <div class="card">
         <div class="card-header d-flex p-0">
             <h3 class="card-title p-3">Liste des chambres</h3>
-            <ul class="nav nav-pills ml-auto p-2">
-                <li class="nav-item">
-                    <a class="btn btn-block btn-success"
-                        href="/admin/{{ request()->segment(count(request()->segments())) }}/create">Ajouter</a>
-                </li>
-            </ul>
+            @if ($prefix == 'admin')
+                <ul class="nav nav-pills ml-auto p-2">
+                    <li class="nav-item">
+                        <a class="btn btn-block btn-success"
+                            href="/admin/{{ request()->segment(count(request()->segments())) }}/create">Ajouter</a>
+                    </li>
+                </ul>
+            @endif
         </div><!-- /.card-header -->
     </div>
     <table class="table table-bordered border-secondary">
@@ -84,17 +98,7 @@
                 <th scope="col">Prix</th>
                 <th scope="col">Statut</th>
                 <th scope="col">Description</th>
-                @php
-                    $url = Route::current()->uri;
-                    $segments = explode('/', $url);
-                    $firstSegment = $segments[0];
-                    
-                    if ($firstSegment == 'admin') {
-                        $prefix = 'admin';
-                    } else {
-                        $prefix = 'recept';
-                    }
-                @endphp
+
                 @if ($prefix == 'admin')
                     <th scope="col">Actions</th>
                 @endif

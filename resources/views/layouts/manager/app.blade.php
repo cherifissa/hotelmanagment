@@ -18,6 +18,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Theme style -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="{{ asset('js/sweetalert.js') }}"></script>
 
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
@@ -95,7 +96,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </li>
                 @endif
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link {{ request()->is('admin/demandes') ? 'active' : '' }} "
+                    <a class="nav-link {{ request()->is($prefix . '/demandes') ? 'active' : '' }} "
                         href="{{ '/' . $prefix . '/demandes' }}">
                         <div class="d-flex align-items-center">
                             <i class="nav-icon fa fa-bookmark"></i>
@@ -393,7 +394,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- jQuery -->
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <!-- Bootstrap JS -->
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('js/sweetalert.js') }}"></script>

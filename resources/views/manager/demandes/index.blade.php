@@ -97,7 +97,7 @@
                     <td>{{ $demande->nombre_enfant }}</td>
                     <td>
                         <div class="d-flex justify-content-evenly">
-                            <form action="{{ route('demandes.destroy', $demande) }}" id="delete-form" method="POST">
+                            <form action="{{ route('demandes.destroy', $demande->id) }}" id="delete-form" method="POST">
                                 @csrf
                                 @method('delete')
                                 <button class="btn btn-link" onclick="confirmeSuppression(event)">

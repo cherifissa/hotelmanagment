@@ -20,7 +20,7 @@ class DemandeReservationController extends Controller
             'tel_client' => 'required|numeric',
             'date_arrive' => 'required|date',
             'date_depart' => 'required|date|after:date_arrive',
-            'type_chambre' => 'required|in:standard,privilege,suite junior,suite VIP',
+            'type_chambre' => 'required|in:standard,privilege,suite junior,suite famille,suite VIP,suite presidentielle',
             'nombre_adulte' => 'required|integer|min:1',
             'nombre_enfant' => 'required|integer|min:0',
         ]);
@@ -30,9 +30,10 @@ class DemandeReservationController extends Controller
         return redirect()->route('accueil')->with('success', 'successfully');
     }
 
-    public function destroy(DemandeReservation $demandeReservation)
+    public function destroy($demandeReservationid)
     {
-        $demandeReservation->delete();
+        $demandeReservation = DemandeReservation::find($demandeReservationid);
+        $demandeReservation->delete(); 
         return redirect()->route('demandes.index')->with('successDelete', 'successfully');
     }
 }
