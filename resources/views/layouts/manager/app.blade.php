@@ -163,7 +163,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <aside class="main-sidebar sidebar-light-dark elevation-2">
             <!-- Brand Logo -->
             <a href="{{ route('manageindex') }}" class="brand-link">
                 <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="Logo"
@@ -220,13 +220,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                             <ul class="nav nav-treeview" style="display: none;">
                                 <li class="nav-item">
-                                    <a href="{{ route('clients.index') }}" class="nav-link">
+                                    <a href="{{ '/' . $prefix . '/clients' }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Liste des clients</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('users.create') }}" class="nav-link">
+                                    <a href="{{ '/' . $prefix . '/users/create' }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Crée une client</p>
                                     </a>
@@ -269,13 +269,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </a>
                                 <ul class="nav nav-treeview" style="display: none;">
                                     <li class="nav-item">
-                                        <a href="{{ route('admins.index') }}" class="nav-link  ">
+                                        <a href="{{ '/' . $prefix . '/admins' }}" class="nav-link  ">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Liste des utilisateur</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{ route('users.create') }}" class="nav-link">
+                                        <a href="{{ '/' . $prefix . '/users/create' }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Crée un utilisateur</p>
                                         </a>
@@ -294,7 +294,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                             <ul class="nav nav-treeview" style="display: none;">
                                 <li class="nav-item">
-                                    <a href="{{ route('messages.index') }}" class="nav-link ">
+                                    <a href="{{ '/' . $prefix . '/demandes' }}" class="nav-link ">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Liste des Demandes de réservation</p>
                                     </a>
@@ -312,7 +312,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                             <ul class="nav nav-treeview" style="display: none;">
                                 <li class="nav-item">
-                                    <a href="{{ route('messages.index') }}" class="nav-link ">
+                                    <a href="{{ '/' . $prefix . '/messages' }}" class="nav-link ">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Liste des messages</p>
                                     </a>
@@ -335,7 +335,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <ul class="nav nav-bottom nav-sidebar flex-column" data-widget="treeview" role="menu">
 
                         <li class="nav-item mt-auto">
-                            <a href="{{ route('profile.index') }}"
+                            <a href="{{ '/' . $prefix . '/profile' }}"
                                 class="nav-link  {{ request()->is($prefix . '/profile*') ? 'active' : '' }} ">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>Profile</p>

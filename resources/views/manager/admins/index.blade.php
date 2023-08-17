@@ -1,4 +1,4 @@
-@extends('layouts.manager/app')
+@extends('layouts.manager.app')
 
 @section('titre')
     Chambre
