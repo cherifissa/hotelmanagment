@@ -29,13 +29,14 @@ class UserFactory extends Factory
 
         $email = $role === 'admin' ? 'admin@gmail.com' : $this->faker->unique()->email;
 
-
         return [
             'nom' => $this->faker->name,
             'tel' => $this->faker->phoneNumber,
             'email' => $email,
             'password' => Hash::make('password'),
             'adresse' => $this->faker->address,
+            'type_piece' => $this->faker->randomElement(['cni', 'passeport', 'carte consulaire']),
+            'numero_piece' => strtoupper($this->faker->unique()->bothify('??#######')),
             'isadmin' => $role,
             'remember_token' => Str::random(10),
         ];

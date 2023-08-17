@@ -11,7 +11,7 @@ class ClientController extends Controller
     {
         $users = User::where('isadmin', 'client')
             ->orderBy('id', 'desc')
-            ->paginate(6);
+            ->paginate(8);
         return view('manager.clients.index', compact('users'));
     }
 

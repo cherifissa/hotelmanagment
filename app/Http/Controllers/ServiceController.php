@@ -10,7 +10,7 @@ class ServiceController extends Controller
 {
     public function index()
     {
-        $services = Service::paginate(6);
+        $services = Service::orderBy('id', 'desc')->paginate(6);
         return view('manager.services.index', ['services' => $services]);
     }
     public function create()
@@ -51,6 +51,6 @@ class ServiceController extends Controller
     {
         $service->delete();
 
-        return redirect()->route('services.index')->with('successDelete', 'successfully.');
+        return redirect()->back()->with('successDelete', 'Delete');
     }
 }

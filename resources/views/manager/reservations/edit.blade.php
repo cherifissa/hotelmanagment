@@ -10,11 +10,22 @@
             <div class="col-md-7">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Créer une reservation</h3>
+                        <h3 class="card-title">Editer une reservation</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form action="{{ route('reservations.update', $reservation) }}" method="POST">
+                    @php
+                        $url = Route::current()->uri;
+                        $segments = explode('/', $url);
+                        $firstSegment = $segments[0];
+                        
+                        if ($firstSegment == 'admin') {
+                            $prefix = 'admin';
+                        } else {
+                            $prefix = 'recept';
+                        }
+                    @endphp
+                    <form action="{{ '/' . $prefix . '/reservations' . '/' . $reservation->numero }}" method="POST">
                         @csrf
                         @method('PUT')
 

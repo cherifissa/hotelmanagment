@@ -14,14 +14,26 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form action="{{ route('users.update', $user) }}" method="POST">
+                    @php
+                        $url = Route::current()->uri;
+                        $segments = explode('/', $url);
+                        $firstSegment = $segments[0];
+                        
+                        if ($firstSegment == 'admin') {
+                            $prefix = 'admin';
+                        } else {
+                            $prefix = 'recept';
+                        }
+                    @endphp
+                    <form action="{{ '/' . $prefix . '/users' . '/' . $user->id }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="card-body">
 
                             <div class="form-group">
                                 <label for="nom">Nom & Prénom </label>
-                                <input type="text" class="form-control" name="nom" value="{{ $user->nom }}">
+                                <input type="text" class="form-control" name="nom"
+                                    value="{{ old('email', $user->nom) }}">
                                 @error('nom')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -29,7 +41,8 @@
 
                             <div class="form-group">
                                 <label for="tel">Téléphone</label>
-                                <input type="text" class="form-control" name="tel" value="{{ $user->tel }}">
+                                <input type="text" class="form-control" name="tel"
+                                    value="{{ old('email', $user->tel) }}">
                                 @error('tel')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -37,15 +50,48 @@
 
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control" name="email" value="{{ $user->email }}">
+                                <input type="email" class="form-control" name="email"
+                                    value="{{ old('email', $user->email) }}">
                                 @error('email')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="form-group">
+                                <label for="type_piece">Type Pièce</label>
+                                <select class="form-control" name="type_piece">
+                                    <option value="">Selectionner le type de pièce </option>
+                                    <option value="cni"
+                                        {{ old('type_piece', $user->type_piece) === 'cni' ? 'selected' : '' }}>CNI
+                                    </option>
+                                    <option value="passeport"
+                                        {{ old('type_piece', $user->type_piece) === 'passeport' ? 'selected' : '' }}>
+                                        Passeport
+                                    </option>
+                                    <option value="carte consulaire"
+                                        {{ old('type_piece', $user->type_piece) === 'carte consulaire' ? 'selected' : '' }}>
+                                        Carte
+                                        Consulaire
+                                    </option>
+                                </select>
+                                @error('type_piece')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="numero_piece">Numero de pièce</label>
+                                <input type="text" class="form-control" name="numero_piece"
+                                    value="{{ old('numero_piece', $user->numero_piece) }}">
+                                @error('numero_piece')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
                                 <label for="adresse">Adresse</label>
-                                <input type="text" class="form-control" name="adresse" value="{{ $user->adresse }}">
+                                <input type="text" class="form-control" name="adresse"
+                                    value="{{ old('numero_piece', $user->adresse) }}">
                                 @error('adresse')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror

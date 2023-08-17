@@ -95,9 +95,21 @@
                     <td>{{ $demande->type_chambre }}</td>
                     <td>{{ $demande->nombre_adulte }}</td>
                     <td>{{ $demande->nombre_enfant }}</td>
+                    @php
+                        $url = Route::current()->uri;
+                        $segments = explode('/', $url);
+                        $firstSegment = $segments[0];
+                        
+                        if ($firstSegment == 'admin') {
+                            $prefix = 'admin';
+                        } else {
+                            $prefix = 'recept';
+                        }
+                    @endphp
                     <td>
                         <div class="d-flex justify-content-evenly">
-                            <form action="{{ route('demandes.destroy', $demande->id) }}" id="delete-form" method="POST">
+                            <form action="{{ '/' . $prefix . '/demandes' . '/' . $demande->id }}" id="delete-form"
+                                method="POST">
                                 @csrf
                                 @method('delete')
                                 <button class="btn btn-link" onclick="confirmeSuppression(event)">

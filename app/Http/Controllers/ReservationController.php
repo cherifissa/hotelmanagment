@@ -7,12 +7,14 @@ use App\Models\User;
 use App\Models\Chambre;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redirect;
 
 class ReservationController extends Controller
 {
     public function index()
     {
-        $reservations = Reservation::paginate(6);
+        $reservations = Reservation::orderBy('created_at', 'desc')->paginate(8);
         return view('manager.reservations.index', ['reservations' => $reservations]);
     }
     public function indexrsv()
@@ -48,10 +50,21 @@ class ReservationController extends Controller
         }
         $validatedData["prix"] = $chambre->prix * $validatedData["nbr_jour"];
         //dd($arrival->isSameDay($today));
-        $validatedData["id"] = $this->generateUniqueNumero();
+        $validatedData["numero"] = $this->generateUniqueNumero();
 
         $reservation = Reservation::create($validatedData);
-        return redirect()->route('reservations.index')->with('success', 'Reservation created successfully.');
+        $url = Route::current()->uri;
+        $segments = explode('/', $url);
+        $firstSegment = $segments[0];
+
+        if ($firstSegment == 'admin') {
+            $prefix = 'admin';
+        } else {
+            $prefix = 'recept';
+        }
+
+        $route = '/' . $prefix . "/reservations";
+        return Redirect::to($route)->with('success', 'successfully');
     }
 
     public function generateUniqueNumero()
@@ -64,7 +77,7 @@ class ReservationController extends Controller
         do {
             $numero = $prefix . $randomNumber;
 
-            $existingReservation = Reservation::where('id', $numero)->exists();
+            $existingReservation = Reservation::where('numero', $numero)->exists();
 
             if (!$existingReservation) {
                 $unique = true;
@@ -98,15 +111,26 @@ class ReservationController extends Controller
             $chambre->save();
         }
 
+
+        $url = Route::current()->uri;
+        $segments = explode('/', $url);
+        $firstSegment = $segments[0];
+
+        if ($firstSegment == 'admin') {
+            $prefix = 'admin';
+        } else {
+            $prefix = 'recept';
+        }
+        $route = '/' . $prefix . "/reservations";
         $reservation->update($validatedData);
 
-        return redirect()->route('reservations.index')->with('successUpdate', 'Reservation updated successfully.');
+        return Redirect::to($route)->with('successUpdate', 'successfully');
     }
 
     public function destroy(Reservation $reservation)
     {
         $reservation->delete();
 
-        return redirect()->route('reservations.index')->with('successDelete', 'Reservation deleted successfully.');
+        return redirect()->back()->with('successDelete', 'Delete');
     }
 }

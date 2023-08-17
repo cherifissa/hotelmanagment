@@ -9,7 +9,7 @@ class ChambreController extends Controller
 {
     public function index()
     {
-        $chambres = Chambre::paginate(6);
+        $chambres = Chambre::paginate(8);
 
         return view('manager.chambres.index', compact('chambres'));
     }
@@ -52,6 +52,6 @@ class ChambreController extends Controller
     public function destroy(Chambre $chambre)
     {
         $chambre->delete();
-        return redirect()->route('chambres.index')->with('successDelete', 'delete');
+        return redirect()->back()->with('successDelete', 'Delete');
     }
 }

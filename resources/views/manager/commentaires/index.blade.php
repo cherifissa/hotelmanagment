@@ -58,7 +58,7 @@
                 <tr class="table-active">
                     <th scope="row">{{ $commentaire->id }}</th>
                     <td>{{ $commentaire->contenu }}</td>
-                    <td>{{ $commentaire->client_id }}</td>
+                    <td>{{ $commentaire->client_id . '-' . $commentaire->user->nom }}</td>
                     @if ($prefix == 'admin')
                         <td>
                             <div class="d-flex justify-content-evenly">

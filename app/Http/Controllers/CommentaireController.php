@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Commentaire;
 use App\Models\User;
+use App\Models\Commentaire;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 class CommentaireController extends Controller
 {
     public function index()
     {
-        $commentaires = Commentaire::paginate(5);
+        $commentaires = Commentaire::orderBy('id', 'desc')->paginate(8);
 
         return view('manager.commentaires.index', ['commentaires' => $commentaires]);
     }
@@ -33,6 +34,6 @@ class CommentaireController extends Controller
     public function destroy(Commentaire $commentaire)
     {
         $commentaire->delete();
-        return redirect()->route('commentaires.index')->with('delete', 'delete');
+        return redirect()->back()->with('successDelete', 'Delete');
     }
 }

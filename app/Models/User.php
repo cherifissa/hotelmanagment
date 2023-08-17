@@ -23,6 +23,8 @@ class User extends Authenticatable
         'email',
         'password',
         'adresse',
+        'type_piece',
+        'numero_piece',
         'isadmin'
     ];
 

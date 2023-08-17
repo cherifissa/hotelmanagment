@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 class MessageController extends Controller
 {
     public function index()
     {
-        $messages = Message::paginate(6);
+        $messages = Message::orderBy('id', 'desc')->paginate(7);
         return view('manager.messages.index', compact('messages'));
     }
 

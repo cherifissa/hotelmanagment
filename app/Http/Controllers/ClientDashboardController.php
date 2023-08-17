@@ -12,7 +12,4 @@ class ClientDashboardController extends Controller
         $reservations = $user->reservations;
         return view('dashboard.dashboard', compact('reservations', 'user'));
     }
-    public function disconnect()
-    {
-    }
 }

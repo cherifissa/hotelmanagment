@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\DemandeReservation;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redirect;
 
 class DemandeReservationController extends Controller
 {
     public function index()
     {
-        $demandes = DemandeReservation::paginate(6);
+        $demandes = DemandeReservation::orderBy('id', 'desc')->paginate(8);
         return view('manager.demandes.index', compact('demandes'));
     }
     public function store(Request $request)
@@ -33,7 +35,7 @@ class DemandeReservationController extends Controller
     public function destroy($demandeReservationid)
     {
         $demandeReservation = DemandeReservation::find($demandeReservationid);
-        $demandeReservation->delete(); 
-        return redirect()->route('demandes.index')->with('successDelete', 'successfully');
+        $demandeReservation->delete();
+        return redirect()->back()->with('successDelete', 'Delete');
     }
 }
