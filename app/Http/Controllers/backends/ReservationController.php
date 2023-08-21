@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\backends;
 
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Chambre;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
 

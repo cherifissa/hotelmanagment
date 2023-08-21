@@ -1,23 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Usercontroller;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\backends\Usercontroller;
+use App\Http\Controllers\backends\AdminController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\ChambreController;
-use App\Http\Controllers\FactureController;
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\backends\ClientController;
+use App\Http\Controllers\backends\ChambreController;
+use App\Http\Controllers\backends\FactureController;
+use App\Http\Controllers\backends\MessageController;
+use App\Http\Controllers\backends\ProfileController;
+use App\Http\Controllers\backends\ServiceController;
 use App\Http\Middleware\AdminAccessMiddleware;
-use App\Http\Controllers\CommentaireController;
-use App\Http\Controllers\ReservationController;
-use App\Http\Controllers\StatistiqueController;
+use App\Http\Controllers\backends\CommentaireController;
+use App\Http\Controllers\backends\ReservationController;
 use App\Http\Middleware\ReceptAccessMiddleware;
-use App\Http\Controllers\ClientDashboardController;
-use App\Http\Middleware\RestaurantAccessMiddleware;
-use App\Http\Controllers\ChambreCategorieController;
+use App\Http\Controllers\backends\ClientDashboardController;
+use App\Http\MiddlewareRestaurantAccessMiddleware;
+use App\Http\Controllers\backends\ChambreCategorieController;
+use App\Http\Controllers\backends\StatistiqueController;
 
 
 /*

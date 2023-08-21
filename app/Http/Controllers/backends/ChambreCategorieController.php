@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\backends;
 
-use App\Models\ChambreCategorie;
 use Illuminate\Http\Request;
+use App\Models\ChambreCategorie;
+use App\Http\Controllers\Controller;
 
 class ChambreCategorieController extends Controller
 {

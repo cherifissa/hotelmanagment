@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\backends;
 
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Service;
 use App\Models\Reservation;
+use App\Http\Controllers\Controller;
 
 class FactureController extends Controller
 {

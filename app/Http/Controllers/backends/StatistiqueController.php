@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\backends;
 
-use DB;
 use App\Models\Service;
 use App\Models\Reservation;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 
 class StatistiqueController extends Controller
