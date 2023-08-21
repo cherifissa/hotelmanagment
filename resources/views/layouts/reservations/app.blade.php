@@ -74,7 +74,7 @@
                                                 <a class="dropdown-item" href="/chambre">Nos Chambres</a>
                                             </li>
 
-                                            <li><a class="dropdown-item" href="/gallery">Galleri</a></li>
+                                            <li><a class="dropdown-item" href="/gallery">Galerie</a></li>
                                             <li><a class="dropdown-item" href="/blog">Blog</a></li>
                                         </ul>
                                     </div>

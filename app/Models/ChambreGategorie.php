@@ -5,15 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Chambre extends Model
+class ChambreGategorie extends Model
 {
     use HasFactory;
-
     public $fillable = [
-        'id',
-        'type',
+        'nom',
         'prix',
-        'status',
         'description'
     ];
 }

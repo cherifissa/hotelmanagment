@@ -43,34 +43,36 @@
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-6">
-                    <div id="serv_hover" class="room">
-                        <div class="room_img">
-                            <figure><img src="images/room1.jpg" alt="#" /></figure>
-                        </div>
-                        <div class="bed_room">
-                            <h3>Chambre Standard </h3>
-                            <p>A cozy and comfortable room with all essential amenities for a pleasant stay.</p>
-                            <h4>
-                                <div class="row mb-3 mt-1">
-                                    <div class="col align-items-start">
-                                        <i class="fa fa-wifi"></i> <span class="ml-3">wifi gratuite</span>
+                    <a href="chambreinfos/standard">
+                        <div id="serv_hover" class="room">
+                            <div class="room_img">
+                                <figure><img src="images/room1.jpg" alt="#" /></figure>
+                            </div>
+                            <div class="bed_room">
+                                <h3>Chambre Standard </h3>
+                                <p>A cozy and comfortable room with all essential amenities for a pleasant stay.</p>
+                                <h4>
+                                    <div class="row mb-3 mt-1">
+                                        <div class="col align-items-start">
+                                            <i class="fa fa-wifi"></i> <span class="ml-3">wifi gratuite</span>
+                                        </div>
+                                        <div class="col  align-items-start">
+                                            <i class="fa fa-users"></i> <span class="ml-3">2 Personnes</span>
+                                        </div>
                                     </div>
-                                    <div class="col  align-items-start">
-                                        <i class="fa fa-users"></i> <span class="ml-3">2 Personnes</span>
-                                    </div>
-                                </div>
 
-                                <div class="row align-items-start">
-                                    <div class="col">
-                                        <i class="fa fa-bed"></i> <span class="ml-3">1 très grand lit</span>
+                                    <div class="row align-items-start">
+                                        <div class="col">
+                                            <i class="fa fa-bed"></i> <span class="ml-3">1 très grand lit</span>
+                                        </div>
+                                        <div class="col">
+                                            <i class="fas fa-water"></i> <span class="ml-3">Vue sur la mer</span>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <i class="fas fa-water"></i> <span class="ml-3">Vue sur la mer</span>
-                                    </div>
-                                </div>
-                            </h4>
+                                </h4>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <div class="col-md-6 col-sm-6">

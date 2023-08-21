@@ -38,7 +38,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('admin') ? 'active' : '' }}" aria-current="page" href="/admin">
+                    <a class="nav-link {{ request()->is('restaurant') ? 'active' : '' }}" aria-current="page"
+                        href="/restaurant">
                         <div class="d-flex align-items-center"> <i class="nav-icon fas fa-home"></i>
                             <p class="ml-2 mt-3">Accueil</p>
                         </div>

@@ -23,8 +23,6 @@ class ChambreController extends Controller
     {
         $validatedData = $request->validate([
             'id' => 'required|numeric|max:9999|unique:chambres,id',
-            'type' => 'required|in:standard,privilege,suite junior,suite famille,suite VIP,suite presidentielle',
-            'prix' => 'required|numeric|max:999999',
             'status' => 'required|string|max:255',
             'description' => 'nullable|string'
         ]);

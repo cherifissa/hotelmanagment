@@ -5,15 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Chambre extends Model
+class ChambreCategorie extends Model
 {
     use HasFactory;
 
     public $fillable = [
-        'id',
-        'type',
+        'nom_categorie',
         'prix',
-        'status',
+        'wifi',
+        'petit_dej',
+        'nbr_lit',
+        'nbr_chb',
+        'images',
         'description'
     ];
 }

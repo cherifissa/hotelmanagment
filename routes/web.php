@@ -6,18 +6,18 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ChambreController;
+use App\Http\Controllers\FactureController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Middleware\AdminAccessMiddleware;
 use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\ReservationController;
-use App\Http\Controllers\ClientDashboardController;
-use App\Http\Controllers\DemandeReservationController;
-use App\Http\Controllers\FactureController;
 use App\Http\Controllers\StatistiqueController;
-use App\Http\Middleware\AdminAccessMiddleware;
 use App\Http\Middleware\ReceptAccessMiddleware;
+use App\Http\Controllers\ClientDashboardController;
 use App\Http\Middleware\RestaurantAccessMiddleware;
+use App\Http\Controllers\ChambreCategorieController;
 
 
 /*
@@ -42,7 +42,6 @@ Route::prefix('/')->group(function () {
     })->name('accueil');
     Route::resource('/message', MessageController::class)->only('store');
     Route::post('commentaire', [CommentaireController::class, 'store'])->name('commentairesend');
-    Route::resource('demande_reservations', DemandeReservationController::class)->only('create', 'store');
     Route::get('/dasboard', [ClientDashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/contact', function () {
@@ -54,6 +53,8 @@ Route::prefix('/')->group(function () {
     Route::get('/gallery', function () {
         return view('gallery.gallery');
     });
+    Route::get('/chambre/{chambre}', [ChambreCategorieController::class, 'infos'])->name('chambreinfos');
+
     Route::get('/chambre', function () {
         return view('chambre.chambre');
     })->name('chambre');
@@ -65,8 +66,8 @@ $adminAndReceptRoutes = function () {
     Route::get('/', function () {
         return view('manager.index');
     })->name('manageindex');
-    Route::get('facture/{reservation}', [FactureController::class, 'index'])->name('facture');
-    Route::resource('demandes', DemandeReservationController::class)->except('show');
+    Route::get('facture', [FactureController::class, 'index'])->name('facture');
+    Route::get('print_facture', [FactureController::class, 'print'])->name('facture');
     Route::get('chambres', [ChambreController::class, 'index'])->name('chambrerecept');
     Route::resource('/messages', MessageController::class)->only('index', 'destroy');
     Route::resource('profile', ProfileController::class)->only('update', 'index');
@@ -81,24 +82,35 @@ $adminRoutes = function () {
     Route::resource('admins', AdminController::class)->only('index');
     Route::get('statistiques', [StatistiqueController::class, 'index'])->name('statistiques');
     Route::resource('chambres', ChambreController::class)->except('show');
+    Route::resource('chambre_categories', ChambreCategorieController::class)->except('show');
 };
 
 //route admin
-Route::prefix('admin')->middleware([AdminAccessMiddleware::class])->group($adminAndReceptRoutes, $adminRoutes);
+Route::prefix('admin')->middleware([AdminAccessMiddleware::class])->group($adminAndReceptRoutes);
 Route::prefix('admin')->middleware([AdminAccessMiddleware::class])->group($adminRoutes);
 
 //route recept
 Route::prefix('recept')->middleware([ReceptAccessMiddleware::class])->group($adminAndReceptRoutes);
 
-
-
-//restaurantr
-//middleware([RestaurantAccessMiddleware::class])->
-Route::prefix('restaurant')->middleware([RestaurantAccessMiddleware::class])->group(function () {
+$BarRestaurantRoutes = function () {
+    Route::get('reservations', [ReservationController::class, 'indexrsv'])->name('rsvindex');
+    Route::get('clients', [ClientController::class, 'indexclt'])->name('cltindex');
+};
+$restoRoutes = function () {
     Route::get('/', function () {
         return view('manager.restaurants.index');
     });
-    Route::get('reservations', [ReservationController::class, 'indexrsv'])->name('rsvindex');
-    Route::get('clients', [ClientController::class, 'indexclt'])->name('cltindex');
     Route::resource('services', ServiceController::class)->except('show');
-})->name('restoindex');
+};
+$BarRoutes = function () {
+    Route::get('/', function () {
+        return view('manager.bars.index');
+    });
+};
+
+//restaurant
+Route::prefix('restaurant')->middleware([RestaurantAccessMiddleware::class])->group($BarRestaurantRoutes, $restoRoutes);
+Route::prefix('restaurant')->middleware([RestaurantAccessMiddleware::class])->group($restoRoutes);
+//bar
+Route::prefix('bar')->group($BarRestaurantRoutes, $BarRoutes);
+Route::prefix('bar')->group($BarRoutes);

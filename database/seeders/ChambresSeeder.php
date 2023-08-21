@@ -13,6 +13,6 @@ class ChambresSeeder extends Seeder
      */
     public function run(): void
     {
-        Chambre::factory()->count(12)->create();
+        //Chambre::factory()->count(12)->create();
     }
 }

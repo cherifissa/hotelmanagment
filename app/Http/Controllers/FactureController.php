@@ -40,7 +40,7 @@ class FactureController extends Controller
 
         $totalPrixFromServices = collect($services)->pluck('totalPrice')->sum();
         $totalprix = $reservation->prix + $totalPrixFromServices;
-        return view('manager.facture.facture', compact('client', 'services', 'reservation', 'date', 'totalprix', 'totalPrixFromServices', 'totalPrixservice'));
+        return view('manager.facture.index', compact('client', 'services', 'reservation', 'date', 'totalprix', 'totalPrixFromServices', 'totalPrixservice'));
     }
 
     private function getServiceTypeName($type)
@@ -52,5 +52,9 @@ class FactureController extends Controller
         ];
 
         return $typeNames[$type] ?? $type; // Return the full name or the original type if not found
+    }
+    public function print()
+    {
+        return view('manager.facture.printfacture');
     }
 }
