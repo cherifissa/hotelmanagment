@@ -94,8 +94,6 @@
         <thead class="table-dark">
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Type</th>
-                <th scope="col">Prix</th>
                 <th scope="col">Statut</th>
                 <th scope="col">Description</th>
 
@@ -108,10 +106,8 @@
             @foreach ($chambres as $chambre)
                 <tr class="table-active">
                     <th scope="row">{{ $chambre->id }}</th>
-                    <td>{{ $chambre->type }}</td>
-                    <td>{{ $chambre->prix }}</td>
                     <td>{{ $chambre->status }}</td>
-                    <td>{{ $chambre->description }}</td>
+                    <td>{{ $chambre->categorie_id }}</td>
                     @if ($prefix == 'admin')
                         <td>
                             <div class="d-flex justify-content-evenly">

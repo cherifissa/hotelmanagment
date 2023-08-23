@@ -11,9 +11,7 @@ class Chambre extends Model
 
     public $fillable = [
         'id',
-        'type',
-        'prix',
         'status',
-        'description'
+        'categorie_id'
     ];
 }

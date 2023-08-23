@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('chambres', function (Blueprint $table) {
             $table->integer('id')->unsigned()->primary();
             $table->enum('status', ['occupé', 'libre', 'hors service']);
+            $table->bigInteger('categorie_id')->unsigned();
+            $table->foreign('categorie_id')->references('id')->on('chambre_categories')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

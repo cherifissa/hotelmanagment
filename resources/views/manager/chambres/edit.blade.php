@@ -21,39 +21,27 @@
 
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="type">Type</label>
-                                <select class="form-control" name="type">
-                                    <option value="standard"
-                                        {{ old('type', $chambre->type) === 'standard' ? 'selected' : '' }}>standard
-                                    </option>
-                                    <option value="privilege"
-                                        {{ old('type', $chambre->type) === 'privilege' ? 'selected' : '' }}>privilege
-                                    </option>
-                                    <option value="suite junior"
-                                        {{ old('type', $chambre->type) === 'suite junior' ? 'selected' : '' }}>
-                                        suite junior</option>
-                                    <option value="suite famille"
-                                        {{ old('type', $chambre->type) === 'suite famille' ? 'selected' : '' }}>suite
-                                        famille
-                                    </option>
-                                    <option value="suite VIP"
-                                        {{ old('type', $chambre->type) === 'suite VIP' ? 'selected' : '' }}>suite VIP
-                                    </option>
-                                    <option value="suite presidentielle"
-                                        {{ old('type', $chambre->type) === 'suite presidentielle' ? 'selected' : '' }}>suite
-                                        presidentielle
-                                    </option>
-                                </select>
-                                @error('type')
+                                <label for="id">Numéro chambre</label>
+                                <input type="number" maxlength="5" class="form-control" name="id"
+                                    value="{{ old('id', $chambre->id) }}">
+                                @error('id')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="form-group">
-                                <label for="prix">Prix</label>
-                                <input type="number" class="form-control" name="prix"
-                                    value="{{ old('prix', $chambre->prix) }}">
-                                @error('prix')
+                                <label for="categorie_id">ID Catégorie</label>
+                                <select class="form-control" name="categorie_id">
+                                    <option value="{{ $chambre->categorie_id }}">
+                                        {{ $chambre->categorie_id }}
+                                    </option>
+                                    @foreach ($categories as $categories)
+                                        <option value="{{ $categories->id }}">
+                                            {{ $categories->id }}-{{ $categories->nom }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('categorie_id')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -61,25 +49,17 @@
                             <div class="form-group">
                                 <label for="status">Status</label>
                                 <select class="form-control" name="status">
+                                    <option selected>Sélectioner un status</option>
+                                    <option value="libre"
+                                        {{ old('status', $chambre->status) === 'libre' ? 'selected' : '' }}>libre</option>
                                     <option value="occupé"
                                         {{ old('status', $chambre->status) === 'occupé' ? 'selected' : '' }}>occupé
                                     </option>
-                                    <option value="libre"
-                                        {{ old('status', $chambre->status) === 'libre' ? 'selected' : '' }}>libre</option>
                                     <option value="hors service"
                                         {{ old('status', $chambre->status) === 'hors service' ? 'selected' : '' }}>
                                         hors service</option>
                                 </select>
                                 @error('status')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="description">Description</label>
-                                <input type="text" class="form-control" name="description"
-                                    value="{{ old('description', $chambre->description) }}">
-                                @error('description')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>

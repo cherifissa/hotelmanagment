@@ -15,7 +15,7 @@ use App\Http\Controllers\backends\CommentaireController;
 use App\Http\Controllers\backends\ReservationController;
 use App\Http\Middleware\ReceptAccessMiddleware;
 use App\Http\Controllers\backends\ClientDashboardController;
-use App\Http\MiddlewareRestaurantAccessMiddleware;
+use App\Http\Middleware\RestaurantAccessMiddleware;
 use App\Http\Controllers\backends\ChambreCategorieController;
 use App\Http\Controllers\backends\StatistiqueController;
 
@@ -43,7 +43,6 @@ Route::prefix('/')->group(function () {
     Route::resource('/message', MessageController::class)->only('store');
     Route::post('commentaire', [CommentaireController::class, 'store'])->name('commentairesend');
     Route::get('/dasboard', [ClientDashboardController::class, 'index'])->name('dashboard');
-
     Route::get('/contact', function () {
         return view('contact.contact');
     });
@@ -54,7 +53,6 @@ Route::prefix('/')->group(function () {
         return view('gallery.gallery');
     });
     Route::get('/chambre/{chambre}', [ChambreCategorieController::class, 'infos'])->name('chambreinfos');
-
     Route::get('/chambre', function () {
         return view('chambre.chambre');
     })->name('chambre');

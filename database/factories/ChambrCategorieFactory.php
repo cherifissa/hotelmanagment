@@ -2,22 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Chambre;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Chambre>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class ChambreFactory extends Factory
+class ChambrCategorieFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-
-    private static $id = 100;
-
     public function definition()
     {
         $type = $this->faker->randomElement(['standard', 'privilege', 'suite junior', 'suite famille', 'suite VIP', 'suite presidentielle']);
@@ -38,18 +34,12 @@ class ChambreFactory extends Factory
         }
 
         return [
-            'id' => self::$id++,
             'type' => $type,
             'prix' => $prix,
-            'status' => 'libre',
+            'wifi'  => 1,
+            'petit_dej' => 1,
+            'nbr_chb' => 2,
             'description' => $this->faker->sentence,
         ];
-    }
-    public function configure()
-    {
-        return $this->afterCreating(function (Chambre $chambre) {
-            $chambre->id = $chambre->id + 100;
-            $chambre->save();
-        });
     }
 }

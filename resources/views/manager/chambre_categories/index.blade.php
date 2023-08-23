@@ -98,7 +98,6 @@
                 <th scope="col">Prix</th>
                 <th scope="col">Nombre de chambre</th>
                 <th scope="col">Nombre de lit</th>
-                <th scope="col">Images</th>
                 <th scope="col">Description</th>
 
                 @if ($prefix == 'admin')
@@ -114,8 +113,7 @@
                     <td>{{ $categorie->prix }}</td>
                     <td>{{ $categorie->nbr_chb }}</td>
                     <td>{{ $categorie->nbr_lit }}</td>
-                    <td>{{ $categorie->images }}</td>
-                    <td>{{ $categorie->description }}</td>
+                    <td>{{ Illuminate\Support\Str::limit($categorie->description, $limit = 170, $end = '...') }}</td>
                     @if ($prefix == 'admin')
                         <td>
                             <div class="d-flex justify-content-evenly">

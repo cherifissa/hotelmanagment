@@ -65,6 +65,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </li>
 
                 <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link {{ request()->is($prefix . '/chambre_categories') ? 'active' : '' }} "
+                        href="{{ '/' . $prefix . '/chambre_categories' }}">
+                        <div class="d-flex align-items-center">
+                            <i class="nav-icon fa fa-bookmark"></i>
+                            <p class="ml-2 mt-3">Categories de Chambre</p>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link {{ request()->is($prefix . '/chambres*') ? 'active' : '' }} "
                         href="{{ '/' . $prefix . '/chambres' }}">
                         <div class="d-flex align-items-center"><i class="nav-icon fas fa-house-user"></i>
@@ -72,6 +82,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
                     </a>
                 </li>
+
                 <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link {{ request()->is($prefix . '/clients*') ? 'active' : '' }} "
                         href="{{ '/' . $prefix . '/clients' }}">
@@ -98,15 +109,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </a>
                     </li>
                 @endif
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link {{ request()->is($prefix . '/chambre_categories') ? 'active' : '' }} "
-                        href="{{ '/' . $prefix . '/chambre_categories' }}">
-                        <div class="d-flex align-items-center">
-                            <i class="nav-icon fa fa-bookmark"></i>
-                            <p class="ml-2 mt-3">Categories de Chambre</p>
-                        </div>
-                    </a>
-                </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link {{ request()->is($prefix . '/messages') ? 'active' : '' }} "
                         href="{{ '/' . $prefix . '/messages' }}">

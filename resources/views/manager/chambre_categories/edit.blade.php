@@ -76,17 +76,6 @@
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                <label for="images">Images (Selectioner plusieurs images à la fois)</label>
-                                <input type="file" class="form-control" name="images[]"
-                                    value="{{ old('images', $ChambreCategorie->images) }}" multiple>
-                                @error('images')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="mt-4">
-                                <div class="row" id="image-preview"></div>
-                            </div>
 
                             <div class="form-group">
                                 <label for="description">Description</label>
@@ -144,34 +133,4 @@
         </div>
 
     </div>
-
-    <script>
-        function previewImages() {
-            var preview = document.querySelector('#image-preview');
-            var files = document.querySelector('input[type=file]').files;
-
-            preview.innerHTML = '';
-
-            function readAndPreview(file) {
-                if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                    var reader = new FileReader();
-
-                    reader.onload = function(event) {
-                        var image = new Image();
-                        image.src = event.target.result;
-                        image.style.maxWidth = '150px';
-                        preview.appendChild(image);
-                    }
-
-                    reader.readAsDataURL(file);
-                }
-            }
-
-            if (files) {
-                [].forEach.call(files, readAndPreview);
-            }
-        }
-
-        document.querySelector('input[type=file]').addEventListener('change', previewImages);
-    </script>
 @endsection

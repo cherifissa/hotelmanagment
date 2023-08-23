@@ -13,16 +13,16 @@
         figure#spinner {
             transform-style: preserve-3d;
             height: 350px;
-            transform-origin: 40% 40% -500px;
+            transform-origin: 50% 50% -500px;
             transition: 1s;
         }
 
         figure#spinner img {
-            width: 75%;
+            width: 70%;
             height: 350px;
             max-width: 425px;
             position: absolute;
-            left: 40%;
+            left: 30%;
             transform-origin: 50% 50% -500px;
             outline: 1px solid transparent;
         }
@@ -93,26 +93,21 @@
         <div class="container">
 
             <div class="row">
-                <div class="col-md-7 col-sm-6">
+                <div class="col-md-6 col-sm-6">
                     <base href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/wanaka-tree.jpg">
                     <div id="carousel">
                         <figure id="spinner">
 
                             <img src="{{ asset('images/litavetablepc.jpg') }}">
-                            <img src="{{ asset('images/blog1.jpg') }}">
-                            <img src="{{ asset('images/canapé.jpg') }}">
-                            <img src="{{ asset('images/chaisesalon.jpg') }}">
-                            <img src="{{ asset('images/chambre2lit.jpg') }}">
+                            <img src="{{ asset('images/litavetablepc.jpg') }}">
+                            <img src="{{ asset('images/litavetablepc.jpg') }}">
+                            <img src="{{ asset('images/litavetablepc.jpg') }}">
 
                         </figure>
                     </div>
                     <span style="float:left" class="ss-icon" onclick="galleryspin('-')">&lt;</span>
                     <span style="float:right" class="ss-icon" onclick="galleryspin('')">&gt;</span>
 
-                </div>
-                <div class="col-md-5">
-                    <h1 class="text text-uppercase" style="text-align: center;">{{ $chambreCategorie->nom }}</h1>
-                    <p class="text text-justify">{{ $chambreCategorie->description }}</p>
                 </div>
 
             </div>
@@ -177,8 +172,7 @@
                     <div class="col-md-6">
                         <h4>Autres</h4>
                         <ul class="list-group">
-                            <li class="list-group-item"><i class="fas fa-housekeeping"></i> Service de ménage quotidien
-                            </li>
+                            <li class="list-group-item"><i class="fas fa-housekeeping"></i> Service de ménage quotidien</li>
                             <li class="list-group-item"><i class="fas fa-laptop"></i> Bureau</li>
                             <li class="list-group-item"><i class="fas fa-iron"></i> Fer et planche à repasser</li>
                             <li class="list-group-item"><i class="fas fa-laptop"></i> Coffre-fort pouvant accueillir un

@@ -8,9 +8,16 @@ use App\Http\Controllers\Controller;
 
 class ChambreCategorieController extends Controller
 {
-    public function infos()
+    public function infos(Request $request)
     {
-        return view('chambre.chambreinfos');
+        $chambreValue = $request->route('chambre');
+
+        $chambreCategorie = ChambreCategorie::where('nom', $chambreValue)->first();
+        $images = json_decode($chambreCategorie->images);
+
+        //dd(json_decode($chambreCategorie->images));
+
+        return view('chambre.chambreinfos', compact('chambreCategorie', 'images'));
     }
     public function index()
     {
@@ -23,31 +30,19 @@ class ChambreCategorieController extends Controller
     }
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
             'nom' => 'required|in:standard,privilege,suite junior,suite famille,suite VIP,suite presidentielle|unique:chambre_categories,nom',
             'prix' => 'required|integer',
             'nbr_lit' => 'required|integer|min:1',
             'nbr_chb' => 'required|integer|min:1',
-            'images' => 'nullable|array',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'description' => 'nullable|string|max:100',
+            'description' => 'nullable|string',
         ]);
-
-
         $validatedData['petit_dej'] = $request->has('petit_dej') ? 1 : 0;
         $validatedData['wifi'] = $request->has('wifi') ? 1 : 0;
 
-        $images = [];
 
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $modifiedName = 'image_' . uniqid() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('images'), $modifiedName);
-                $images[] = $modifiedName;
-            }
-        }
-
-        $validatedData['images'] = json_encode($images);
+        //dd($validatedData);
         $chambreCategorie = ChambreCategorie::create($validatedData);
 
         return redirect()->route('chambre_categories.index')->with('success', 'Chambre category created successfully.');
@@ -61,21 +56,22 @@ class ChambreCategorieController extends Controller
 
     public function update(Request $request, ChambreCategorie $ChambreCategorie)
     {
-        $validatedData = $request->validate([
-            'nom' => 'required|in:standard,privilege,suite junior,suite famille,suite VIP,suite presidentielle|unique:chambre_categories,nom',
-            'prix' => 'required|integer|unsigned',
-            'wifi' => 'boolean',
-            'petit_dej' => 'boolean',
-            'nbr_lit' => 'required|integer|min:1',
-            'images' => 'required|array',
-            'description' => 'nullable|string|max:100',
-        ]);
-        dd($validatedData);
 
+        $validatedData = $request->validate([
+            'nom' => 'required|in:standard,privilege,suite junior,suite famille,suite VIP,suite presidentielle|unique:chambre_categories,id,' . $ChambreCategorie->id,
+            'prix' => 'required|integer',
+            'nbr_lit' => 'required|integer|min:1',
+            'nbr_chb' => 'required|integer|min:1',
+            'description' => 'nullable|string',
+        ]);
+        $validatedData['petit_dej'] = $request->has('petit_dej') ? 1 : 0;
+        $validatedData['wifi'] = $request->has('wifi') ? 1 : 0;
+
+        //dd($validatedData);
         $ChambreCategorie->update($validatedData);
 
         return redirect()->route('chambre_categories.index')
-            ->with('success', 'Chambre category updated successfully.');
+            ->with('successUpdate', 'Chambre category updated successfully.');
     }
 
     public function destroy($ChambreCategorieid)
