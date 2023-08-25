@@ -20,6 +20,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('js/sweetalert.js') }}"></script>
 
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/css/multiselect.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
 
     <!-- Google Font: Source Sans Pro -->
@@ -153,7 +154,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <li class="nav-item ">
                     @if ($prefix == 'admin')
                         <form action="{{ route('disconnect', session('admin')) }}" method="post">@csrf
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i></button>
+                            <button type="submit" class="btn btn-danger"><i
+                                    class="fas fa-sign-out-alt"></i></button>
                         </form>
                     @else
                         <form action="{{ route('disconnect', session('recept')) }}" method="post">
@@ -408,6 +410,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('js/sweetalert.js') }}"></script>
+    <script src="{{ asset('dist/js/multiselect.js') }}"></script>
     <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
     <script src="{{ asset('js/highchart.js') }}"></script>
     <script src="{{ asset('js/accessibility.js') }}"></script>

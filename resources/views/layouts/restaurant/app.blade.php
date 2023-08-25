@@ -63,6 +63,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link {{ request()->is('restaurant/produits*') ? 'active' : '' }} "
+                        href="/restaurant/produits">
+                        <div class="d-flex align-items-center"> <i class="nav-icon fa fa-bookmark"></i>
+                            <p class="ml-2 mt-3">Produits </p>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link {{ request()->is('restaurant/services*') ? 'active' : '' }} "
                         href="/restaurant/services">
                         <div class="d-flex align-items-center"> <i class="nav-icon fa fa-bookmark"></i>

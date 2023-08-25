@@ -18,7 +18,7 @@ use App\Http\Controllers\backends\ClientDashboardController;
 use App\Http\Middleware\RestaurantAccessMiddleware;
 use App\Http\Controllers\backends\ChambreCategorieController;
 use App\Http\Controllers\backends\StatistiqueController;
-
+use App\Http\Controllers\ProduitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,10 +95,9 @@ $BarRestaurantRoutes = function () {
     Route::get('clients', [ClientController::class, 'indexclt'])->name('cltindex');
 };
 $restoRoutes = function () {
-    Route::get('/', function () {
-        return view('manager.restaurants.index');
-    });
+    Route::get('/', [ProduitController::class, 'index']);
     Route::resource('services', ServiceController::class)->except('show');
+    Route::resource('produits', ProduitController::class)->except('show');
 };
 $BarRoutes = function () {
     Route::get('/', function () {

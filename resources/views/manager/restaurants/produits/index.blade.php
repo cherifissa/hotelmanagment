@@ -133,24 +133,32 @@
                 <div class="card">
                     <div class="card-header d-flex p-0">
                         <h3 class="card-title p-3">Liste des Produits</h3>
+                        <ul class="nav nav-pills ml-auto p-2">
+                            <li class="nav-item">
+                                <a class="btn btn-block btn-success"
+                                    href="/restaurant/{{ request()->segment(count(request()->segments())) }}/create">Ajouter</a>
+                            </li>
+                        </ul>
                     </div><!-- /.card-header -->
                 </div>
-                <table class="table">
-                    <thead>
+                <table class="table table-bordered border-secondary">
+                    <thead class="table-dark">
                         <tr>
-                            <th>Image</th>
-                            <th>Nom</th>
-                            <th>Prix</th>
-                            <th>Actions</th>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Prix</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Actions</th>
 
                         </tr>
                     </thead>
                     <tbody class="table-group-divider">
                         @foreach ($produits as $produit)
                             <tr class="table-active">
-                                <td>{{ $produit->image }}</td>
+                                <th scope="row">{{ $produit->id }}</th>
                                 <td>{{ $produit->nom }}</td>
                                 <td>{{ $produit->prix }}</td>
+                                <td>{{ $produit->image }}</td>
 
                                 <td>
                                     <div class="d-flex justify-content-evenly">
