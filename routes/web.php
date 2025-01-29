@@ -106,8 +106,8 @@ $BarRoutes = function () {
 };
 
 //restaurant
-Route::prefix('restaurant')->middleware([RestaurantAccessMiddleware::class])->group($BarRestaurantRoutes, $restoRoutes);
+Route::prefix('restaurant')->middleware([RestaurantAccessMiddleware::class])->group($BarRestaurantRoutes);
 Route::prefix('restaurant')->middleware([RestaurantAccessMiddleware::class])->group($restoRoutes);
 //bar
-Route::prefix('bar')->group($BarRestaurantRoutes, $BarRoutes);
+Route::prefix('bar')->group($BarRestaurantRoutes);
 Route::prefix('bar')->group($BarRoutes);
